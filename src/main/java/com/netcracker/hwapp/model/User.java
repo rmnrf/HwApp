@@ -1,15 +1,16 @@
 package com.netcracker.hwapp.model;
 
-import com.netcracker.hwapp.entity.TaskEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity(name = "users")
 @Table(name = "users")
+@Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn(discriminatorType = DiscriminatorType.STRING,
+                     name = "user_type")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,7 +23,4 @@ public class User {
     private String firstName;
     private String lastName;
     private String middleName;
-
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "creator")
-//    private List<TaskEntity> tasks;
 }

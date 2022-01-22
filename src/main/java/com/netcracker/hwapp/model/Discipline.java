@@ -1,24 +1,23 @@
-package com.netcracker.hwapp.entity;
+package com.netcracker.hwapp.model;
 
-import com.netcracker.hwapp.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
-@Entity
+@Entity(name = "disciplines")
+@Table(name = "disciplines")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class TodoEntity {
+public class Discipline {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String title;
-    private Boolean completed;
+    private String name;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @ManyToMany(mappedBy = "disciplines")
+    private List<Teacher> teachers;
 }

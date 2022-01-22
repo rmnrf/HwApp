@@ -21,25 +21,26 @@ public class UserService {
     @Autowired
     private UserRepo userRepo;
 
-    public DTOEntity createUser(DTOEntity userDTO) throws UserAlreadyExistsException {
+    public UserCreateDTO createUser(UserCreateDTO userCreateDTO) throws UserAlreadyExistsException {
         User user = new User();
-        CopyUtils.copyProperties(userDTO, user);
+        CopyUtils.copyProperties(userCreateDTO, user);
         if (userRepo.findByEmail(user.getEmail()) != null) {
             throw new UserAlreadyExistsException("Пользователь с таким email уже существует.");
         }
         userRepo.save(user);
-        return new DtoUtils().convertToDto(user, new UserCreateDTO());
+        return (UserCreateDTO) new DtoUtils().convertToDto(user, new UserCreateDTO());
     }
 
-    public DTOEntity updateUser(DTOEntity userDTO, Long id) throws UserNotFoundException {
+    public UserUpdateDTO updateUser(UserUpdateDTO userUpdateDTO, Long id) throws UserNotFoundException {
         Optional<User> user = userRepo.findById(id);
         if (user.isEmpty()) {
             throw new UserNotFoundException("Такого пользователя не существует.");
         }
-        var userEntity = user.get();
-        CopyUtils.copyProperties(userDTO, userEntity);
+        User userEntity = (User) new DtoUtils().convertToEntity(user.get(), userUpdateDTO);
+        //var userEntity = user.get();
+        //CopyUtils.copyProperties(userDTO, userEntity);
         userRepo.save(userEntity);
-        return new DtoUtils().convertToDto(user, new UserUpdateDTO());
+        return (UserUpdateDTO) new DtoUtils().convertToDto(user.get(), new UserUpdateDTO());
     }
 
     public DTOEntity readUser(Long id) throws UserNotFoundException {
