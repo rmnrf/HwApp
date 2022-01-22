@@ -1,7 +1,6 @@
 package com.netcracker.hwapp.model;
 
 import com.netcracker.hwapp.entity.TaskEntity;
-import com.netcracker.hwapp.entity.UserEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,7 +23,7 @@ public class Task {
         model.setCreationDate(entity.getCreationDate());
         model.setDeadlineDate(entity.getDeadlineDate());
         model.setDescription(entity.getDescription());
-        model.setCreator(User.toModel(entity.getCreator()));
+        //model.setCreator(User.toModel(entity.getCreator()));
         return model;
     }
 }

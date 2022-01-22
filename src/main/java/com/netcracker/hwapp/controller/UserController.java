@@ -1,9 +1,9 @@
 package com.netcracker.hwapp.controller;
 
-import com.netcracker.hwapp.entity.UserEntity;
+import com.netcracker.hwapp.dto.UserCreateDTO;
+import com.netcracker.hwapp.dto.UserUpdateDTO;
 import com.netcracker.hwapp.exception.UserAlreadyExistsException;
 import com.netcracker.hwapp.exception.UserNotFoundException;
-import com.netcracker.hwapp.repository.UserRepo;
 import com.netcracker.hwapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,9 +19,9 @@ public class UserController {
     private UserService userService;
 
     @PostMapping
-    public ResponseEntity<?> registration(@Valid @RequestBody UserEntity user) {
+    public ResponseEntity<?> createUser(@Valid @RequestBody UserCreateDTO userCreateDTO) {
         try {
-            userService.registration(user);
+            userService.createUser(userCreateDTO);
             return ResponseEntity.ok("Пользователь успешно зарегистрирован.");
         } catch (UserAlreadyExistsException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -30,10 +30,23 @@ public class UserController {
         }
     }
 
-    @GetMapping
-    public ResponseEntity<?> getOneUser(@RequestParam Long id) {
+    @PutMapping
+    public ResponseEntity<?> updateUser(@Valid @RequestBody UserUpdateDTO userUpdateDTO,
+                                        @RequestParam Long userId) {
         try {
-            return ResponseEntity.ok(userService.getOne(id));
+            userService.updateUser(userUpdateDTO, userId);
+            return ResponseEntity.ok("Данные пользователя успешно изменены.");
+        } catch (UserNotFoundException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Произошла ошибка.");
+        }
+    }
+
+    @GetMapping
+    public ResponseEntity<?> readUser(@RequestParam Long id) {
+        try {
+            return ResponseEntity.ok(userService.readUser(id));
         } catch (UserNotFoundException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         } catch (Exception e) {
@@ -44,7 +57,7 @@ public class UserController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable Long id) {
         try {
-            return ResponseEntity.ok(userService.delete(id));
+            return ResponseEntity.ok(userService.deleteUser(id));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Произошла ошибка.");
         }

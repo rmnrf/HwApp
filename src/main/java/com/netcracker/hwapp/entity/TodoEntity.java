@@ -1,5 +1,6 @@
 package com.netcracker.hwapp.entity;
 
+import com.netcracker.hwapp.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,5 +20,5 @@ public class TodoEntity {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private UserEntity user;
+    private User user;
 }

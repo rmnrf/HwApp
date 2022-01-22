@@ -1,5 +1,6 @@
 package com.netcracker.hwapp.entity;
 
+import com.netcracker.hwapp.model.User;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -25,5 +26,5 @@ public class TaskEntity {
 
     @ManyToOne
     @JoinColumn(name = "creator_id")
-    private UserEntity creator;
+    private User creator;
 }
