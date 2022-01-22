@@ -1,6 +1,7 @@
 package com.netcracker.hwapp.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.netcracker.hwapp.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,12 +13,8 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserUpdateDTO implements DTOEntity {
-    @NotBlank(message = "Необходимо указать пароль")
     private String password;
-    @NotBlank(message = "Необходимо указать имя")
     private String firstName;
-    @NotBlank(message = "Необходимо указать фамилию")
     private String lastName;
-    @NotBlank(message = "Необходимо указать отчество")
     private String middleName;
 }

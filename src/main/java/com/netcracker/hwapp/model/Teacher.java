@@ -18,6 +18,6 @@ public class Teacher extends User {
     @ManyToMany
     private Set<Discipline> disciplines;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "teacher")
-    private List<Task> tasks;
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "teacher")
+//    private List<Task> tasks;
 }
