@@ -3,7 +3,9 @@ package com.netcracker.hwapp.service;
 import com.netcracker.hwapp.dto.*;
 import com.netcracker.hwapp.exception.UserAlreadyExistsException;
 import com.netcracker.hwapp.exception.UserNotFoundException;
+import com.netcracker.hwapp.model.Student;
 import com.netcracker.hwapp.model.Teacher;
+import com.netcracker.hwapp.repository.StudentRepo;
 import com.netcracker.hwapp.repository.TeacherRepo;
 import com.netcracker.hwapp.repository.UserRepo;
 import com.netcracker.hwapp.util.CopyUtils;
@@ -14,44 +16,42 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class TeacherService {
+public class StudentService {
 
     @Autowired
     private UserRepo userRepo;
     @Autowired
-    private TeacherRepo teacherRepo;
+    private StudentRepo studentRepo;
 
-    public Teacher create(Teacher teacher) throws UserAlreadyExistsException {
-        //Teacher teacher = new Teacher();
-        //CopyUtils.copyProperties(teacher2, teacher);
-        if (userRepo.findByEmail(teacher.getEmail()) != null) {
+    public Student create(Student student) throws UserAlreadyExistsException {
+        if (userRepo.findByEmail(student.getEmail()) != null) {
             throw new UserAlreadyExistsException("Пользователь с таким email уже существует.");
         }
-        userRepo.save(teacher);
-        return teacher;
+        userRepo.save(student);
+        return student;
     }
 
-    public Teacher update(Teacher teacher, Long id) throws UserNotFoundException {
-        Optional<Teacher> oldTeacher = teacherRepo.findById(id);
-        if (oldTeacher.isEmpty()) {
+    public Student update(Student student, Long id) throws UserNotFoundException {
+        Optional<Student> oldStudent = studentRepo.findById(id);
+        if (oldStudent.isEmpty()) {
             throw new UserNotFoundException("Такого пользователя не существует.");
         }
-        var teacherEntity = oldTeacher.get();
-        CopyUtils.copyProperties(teacher, teacherEntity);
-        teacherRepo.save(teacherEntity);
-        return teacherEntity;
+        var studentEntity = oldStudent.get();
+        CopyUtils.copyProperties(student, studentEntity);
+        studentRepo.save(studentEntity);
+        return studentEntity;
     }
 
     public DTOEntity read(Long id) throws UserNotFoundException {
-        Optional<Teacher> teacher = teacherRepo.findById(id);
-        if (teacher.isEmpty()) {
+        Optional<Student> oldStudent = studentRepo.findById(id);
+        if (oldStudent.isEmpty()) {
             throw new UserNotFoundException("Такого пользователя не существует.");
         }
-        return new DtoUtils().convertToDto(teacher.get(), new TeacherReadDTO());
+        return new DtoUtils().convertToDto(oldStudent.get(), new StudentReadDTO());
     }
 
     public Long delete(Long id) {
-        teacherRepo.deleteById(id);
+        studentRepo.deleteById(id);
         return id;
     }
 }

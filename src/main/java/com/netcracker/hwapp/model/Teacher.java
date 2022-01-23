@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 import java.util.Set;
 
@@ -15,6 +16,7 @@ import java.util.Set;
 @AllArgsConstructor
 @DiscriminatorValue("Teacher")
 public class Teacher extends User {
+    @NotEmpty(message = "Укажите преподаваемые дисциплины")
     @ManyToMany
     private Set<Discipline> disciplines;
 

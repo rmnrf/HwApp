@@ -1,5 +1,6 @@
 package com.netcracker.hwapp.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,10 +19,12 @@ public class Group {
     private Long id;
     private Integer number;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "faculty_id")
     private Faculty faculty;
 
+    @JsonIgnore
     @OneToMany
     private Set<Student> students;
 }

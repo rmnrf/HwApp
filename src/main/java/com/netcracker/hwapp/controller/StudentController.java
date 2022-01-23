@@ -1,11 +1,9 @@
 package com.netcracker.hwapp.controller;
 
-import com.netcracker.hwapp.dto.TeacherCreateDTO;
-import com.netcracker.hwapp.dto.TeacherUpdateDTO;
 import com.netcracker.hwapp.exception.UserAlreadyExistsException;
 import com.netcracker.hwapp.exception.UserNotFoundException;
-import com.netcracker.hwapp.model.Teacher;
-import com.netcracker.hwapp.service.TeacherService;
+import com.netcracker.hwapp.model.Student;
+import com.netcracker.hwapp.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,17 +11,17 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/teachers")
-public class TeacherController {
+@RequestMapping("/students")
+public class StudentController {
 
     @Autowired
-    private TeacherService teacherService;
+    private StudentService studentService;
 
     @PostMapping
-    public ResponseEntity<?> create(@Valid @RequestBody Teacher teacher) {
+    public ResponseEntity<?> create(@Valid @RequestBody Student student) {
         try {
-            teacherService.create(teacher);
-            return ResponseEntity.ok("Преподаватель успешно зарегистрирован.");
+            studentService.create(student);
+            return ResponseEntity.ok("Студент успешно зарегистрирован.");
         } catch (UserAlreadyExistsException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         } catch (Exception e) {
@@ -32,11 +30,11 @@ public class TeacherController {
     }
 
     @PutMapping
-    public ResponseEntity<?> update(@Valid @RequestBody Teacher teacher,
+    public ResponseEntity<?> update(@Valid @RequestBody Student student,
                                            @RequestParam Long userId) {
         try {
-            teacherService.update(teacher, userId);
-            return ResponseEntity.ok("Данные преподавателя успешно изменены.");
+            studentService.update(student, userId);
+            return ResponseEntity.ok("Данные студента успешно изменены.");
         } catch (UserNotFoundException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         } catch (Exception e) {
@@ -45,9 +43,9 @@ public class TeacherController {
     }
 
     @GetMapping
-    public ResponseEntity<?> read(@RequestParam Long id) {
+    public ResponseEntity<?> read(@RequestParam Long userId) {
         try {
-            return ResponseEntity.ok(teacherService.read(id));
+            return ResponseEntity.ok(studentService.read(userId));
         } catch (UserNotFoundException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         } catch (Exception e) {
@@ -58,7 +56,7 @@ public class TeacherController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
         try {
-            return ResponseEntity.ok(teacherService.delete(id));
+            return ResponseEntity.ok(studentService.delete(id));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Произошла ошибка.");
         }
