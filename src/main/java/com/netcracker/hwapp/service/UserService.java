@@ -11,8 +11,13 @@ import com.netcracker.hwapp.repository.UserRepo;
 import com.netcracker.hwapp.util.CopyUtils;
 import com.netcracker.hwapp.util.DtoUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -20,6 +25,36 @@ public class UserService {
 
     @Autowired
     private UserRepo userRepo;
+
+    public List<User> getAllUsers() {
+        return userRepo.findAll();
+    }
+
+    public void saveUser(User user) {
+        userRepo.save(user);
+    }
+
+    public void deleteUserById(Long id) {
+        userRepo.deleteById(id);
+    }
+
+    public Page<User> findPaginated(Integer pageNumber, Integer pageSize, String sortField, String sortDir) {
+        Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() :
+                Sort.by(sortField).descending();
+        Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, sort);
+        return userRepo.findAll(pageable);
+    }
+
+    public User getUserById(Long id) throws UserNotFoundException {
+         Optional<User> optional = userRepo.findById(id);
+         User user = null;
+         if (optional.isPresent()) {
+             user = optional.get();
+         } else {
+             throw new UserNotFoundException("Пользователь с id " + id + " не найден.");
+         }
+         return user;
+    }
 
     public UserCreateDTO createUser(UserCreateDTO userCreateDTO) throws UserAlreadyExistsException {
         User user = new User();

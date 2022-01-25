@@ -1,5 +1,6 @@
 package com.netcracker.hwapp.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,10 +17,7 @@ import java.util.Set;
 @AllArgsConstructor
 @DiscriminatorValue("Teacher")
 public class Teacher extends User {
-    @NotEmpty(message = "Укажите преподаваемые дисциплины")
-    @ManyToMany
-    private Set<Discipline> disciplines;
-
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "teacher")
-//    private List<Task> tasks;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "teacher")
+    @JsonIgnore
+    private List<Task> tasks;
 }

@@ -5,8 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 @Entity(name = "students")
@@ -17,6 +15,6 @@ import javax.validation.constraints.NotNull;
 @DiscriminatorValue("Student")
 public class Student extends User {
     @NotNull
-    @OneToOne
+    @ManyToOne
     private Group group;
 }

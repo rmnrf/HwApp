@@ -17,9 +17,7 @@ public class Discipline {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @NotBlank(message = "Укажите название дисциплины")
     private String name;
-
-    @ManyToMany(mappedBy = "disciplines")
-    private List<Teacher> teachers;
 }

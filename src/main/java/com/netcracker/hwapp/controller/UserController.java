@@ -4,62 +4,89 @@ import com.netcracker.hwapp.dto.UserCreateDTO;
 import com.netcracker.hwapp.dto.UserUpdateDTO;
 import com.netcracker.hwapp.exception.UserAlreadyExistsException;
 import com.netcracker.hwapp.exception.UserNotFoundException;
+import com.netcracker.hwapp.model.User;
 import com.netcracker.hwapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
-@RestController
-@RequestMapping("/users")
+@Controller
 public class UserController {
 
     @Autowired
     private UserService userService;
 
-    @PostMapping
-    public ResponseEntity<?> createUser(@Valid @RequestBody UserCreateDTO userCreateDTO) {
-        try {
-            userService.createUser(userCreateDTO);
-            return ResponseEntity.ok("Пользователь успешно зарегистрирован.");
-        } catch (UserAlreadyExistsException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Произошла ошибка.");
-        }
+    @GetMapping("/")
+    public String viewHomePage(Model model) {
+        return findPaginated(1, "firstName", "asc", model);
     }
 
-    @PutMapping
-    public ResponseEntity<?> updateUser(@Valid @RequestBody UserUpdateDTO userUpdateDTO,
-                                        @RequestParam Long userId) {
-        try {
-            userService.updateUser(userUpdateDTO, userId);
-            return ResponseEntity.ok("Данные пользователя успешно изменены.");
-        } catch (UserNotFoundException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Произошла ошибка.");
-        }
+    @GetMapping("/showNewUserForm")
+    public String showNewUserForm(Model model) {
+        // Create model attribute to bind form data
+        User user = new User();
+        model.addAttribute("user", user);
+        return "new_user";
     }
 
-    @GetMapping
-    public ResponseEntity<?> readUser(@RequestParam Long id) {
-        try {
-            return ResponseEntity.ok(userService.readUser(id));
-        } catch (UserNotFoundException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Произошла ошибка.");
+    @PostMapping("/saveUser")
+    public String saveUser(@Valid @ModelAttribute("user") User user, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            return "new_user";
         }
+        userService.saveUser(user);
+        return "redirect:/";
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteUser(@PathVariable Long id) {
-        try {
-            return ResponseEntity.ok(userService.deleteUser(id));
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Произошла ошибка.");
-        }
+    @GetMapping("/deleteUser/{id}")
+    public String deleteUser(@PathVariable(value = "id") Long id) {
+        // Call delete user method
+        userService.deleteUserById(id);
+        return "redirect:/";
+    }
+
+    @GetMapping("/users")
+    public String showUserProfile(@RequestParam Long id,
+                                  Model model) throws UserNotFoundException {
+        model.addAttribute("user", userService.getUserById(id));
+        return "user_profile";
+    }
+
+    @GetMapping("/page/{pageNumber}")
+    public String findPaginated(@PathVariable (value = "pageNumber") Integer pageNumber,
+                                @RequestParam("sortField") String sortField,
+                                @RequestParam("sortDir") String sortDir,
+                                Model model) {
+        Integer pageSize = 5;
+
+        Page<User> page = userService.findPaginated(pageNumber, pageSize, sortField, sortDir);
+        List<User> listUsers = page.getContent();
+
+        model.addAttribute("currentPage", pageNumber);
+        model.addAttribute("totalPages", page.getTotalPages());
+        model.addAttribute("totalItems", page.getTotalElements());
+
+        model.addAttribute("sortField", sortField);
+        model.addAttribute("sortDir", sortDir);
+        model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
+
+        model.addAttribute("listUsers", listUsers);
+        return "index";
+    }
+
+    @GetMapping("/showUpdateUserForm/{id}")
+    public String showUpdateUserForm(@PathVariable(value = "id") Long id, Model model) throws UserNotFoundException {
+        // Get user from service
+        User user = userService.getUserById(id);
+        // Set user as a model attribute to pre-populate the form
+        model.addAttribute("user", user);
+        return "update_user";
     }
 }

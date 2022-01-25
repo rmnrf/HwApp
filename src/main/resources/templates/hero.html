@@ -1,10 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title>Hero</title>
 </head>
 <body>
-$END$
+
+<div layout:fragment="content" class="container col-xl-10 col-xxl-8 px-4 py-3">
+    <div class="row align-items-center g-lg-5 py-5">
+        <div class="col-lg-7 text-center text-lg-start">
+            <h1 class="display-4 fw-bold lh-1 mb-4">HomeWork App</h1>
+            <p class="col-lg-8 fw-lighter fs-4">Приложение для создания и проверки домашних заданий.</p>
+        </div>
+        <div class="col-md-10 mx-auto col-lg-5">
+            <form class="p-4 p-md-5 border rounded-3 bg-light needs-validation" novalidate>
+                <div class="form-floating mb-3">
+                    <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" required>
+
+                    <label for="floatingInput">Email</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="password" class="form-control" id="floatingPassword" placeholder="Password" required>
+                    <label for="floatingPassword">Пароль</label>
+                </div>
+                <div class="checkbox mb-3">
+                    <label>
+                        <input type="checkbox" value="remember-me"> Запомнить меня
+                    </label>
+                </div>
+                <button class="w-100 btn btn-lg btn-outline-primary" type="submit">Войти</button>
+                <hr class="my-4">
+                <h2 class="text-center fw-light">Начните пользоваться</h2>
+                <p class="text-center">Моментальная регистрация</p>
+                <a class="shadow w-100 btn btn-lg btn-primary" th:href="@{'/registration'}">Зарегистрироваться</a>
+            </form>
+        </div>
+    </div>
+</div>
+
 </body>
 </html>

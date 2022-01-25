@@ -1,10 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title>Тип пользователя</title>
 </head>
 <body>
-$END$
+
+<div layout:fragment="content" class="container my-5">
+    <h1 class="text-center mb-4 py-5">Выберите тип учетной записи</h1>
+
+    <div class="row card-group d-flex justify-content-center">
+        <div class="col-sm-4">
+            <div class="card h-100">
+                <div class="shadow-sm card-body">
+                    <div class="text-center"><h3 class="card-title">Студент</h3></div>
+                    <p class="card-text fs-4 fw-light">Студент может получать задания от преподавателей и отправлять свои решения на проверку.</p>
+                    <div class="text-center"><a th:href="@{${#httpServletRequest.requestURI} + 'Form' + '?userType=Student'}" class="shadow btn btn-primary btn-lg">Я — студент</a></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card h-100">
+                <div class="shadow-sm card-body">
+                    <div class="text-center"><h3 class="card-title">Преподаватель</h3></div>
+                    <p class="card-text fs-4 fw-light">Преподаватель создает задания для студентов и имеет возможность оценивать их.</p>
+                    <div class="text-center"><a th:href="@{${#httpServletRequest.requestURI} + 'Form' + '?userType=Teacher'}" class="shadow btn btn-primary btn-lg">Я — преподаватель</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 </body>
 </html>

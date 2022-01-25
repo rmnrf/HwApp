@@ -1,5 +1,7 @@
 package com.netcracker.hwapp.model;
 
+import com.netcracker.hwapp.enums.Grade;
+import com.netcracker.hwapp.enums.Status;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,11 +24,13 @@ public class Solution {
     @OneToOne
     private File file;
 
-    private Integer grade;
+    @Enumerated(EnumType.STRING)
+    private Grade grade;
 
-    private Integer status;
+    @Enumerated(EnumType.STRING)
+    private Status status;
 
     @ManyToOne
-    @JoinColumn(name = "student_id")
+    @JoinColumn(name = "students_id")
     private Student student;
 }

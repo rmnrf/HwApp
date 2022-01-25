@@ -19,18 +19,19 @@ public class Task {
 
     @CreationTimestamp
     private LocalDate creationDate;
+
     private LocalDate deadlineDate;
 
     @ManyToOne
-    @JoinColumn(name = "discipline_id")
+    @JoinColumn(name = "disciplines_id")
     private Discipline discipline;
 
     private String description;
 
-    private Boolean expired = false;
+    //private Boolean expired = false;
 
     @ManyToOne
-    @JoinColumn(name = "teacher_id")
+    @JoinColumn(name = "teachers_id")
     private Teacher teacher;
 
     @OneToMany

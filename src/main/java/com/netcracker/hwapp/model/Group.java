@@ -21,10 +21,10 @@ public class Group {
 
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "faculty_id")
+    @JoinColumn(name = "faculties_id")
     private Faculty faculty;
 
     @JsonIgnore
-    @OneToMany
+    @OneToMany(mappedBy = "group")
     private Set<Student> students;
 }
