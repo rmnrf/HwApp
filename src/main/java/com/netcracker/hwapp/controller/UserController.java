@@ -2,7 +2,7 @@ package com.netcracker.hwapp.controller;
 
 import com.netcracker.hwapp.exception.UserNotFoundException;
 import com.netcracker.hwapp.model.User;
-import com.netcracker.hwapp.service.UserService;
+import com.netcracker.hwapp.service.UserServiceImpl2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -17,9 +17,9 @@ import java.util.List;
 public class UserController {
 
     @Autowired
-    private UserService userService;
+    private UserServiceImpl2 userService;
 
-    @GetMapping("/")
+    @GetMapping("/1")
     public String viewHomePage(Model model) {
         return findPaginated(1, "firstName", "asc", model);
     }

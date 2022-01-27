@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <meta charset="UTF-8">
@@ -23,7 +23,13 @@
 <body>
 
 <!-- Main Navigation -->
-<div th:insert="~{/fragments/header :: user-header}"></div>
+<div sec:authorize="isAuthenticated()">
+    <div th:insert="~{/fragments/header :: user-header}"></div>
+</div>
+
+<div sec:authorize="!isAuthenticated()">
+    <div th:insert="~{/fragments/header :: guest-header}"></div>
+</div>
 
 <!-- Content Section -->
 <section layout:fragment="content">

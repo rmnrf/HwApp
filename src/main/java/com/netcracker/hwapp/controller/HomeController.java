@@ -1,11 +1,21 @@
 package com.netcracker.hwapp.controller;
 
+import com.netcracker.hwapp.model.User;
+import com.netcracker.hwapp.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.security.Principal;
+
 @Controller
 class HomeController {
+
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/home")
     String index(Model model) {
@@ -17,25 +27,33 @@ class HomeController {
         return "contact";
     }
 
+    @GetMapping("/profile")
+    public String profilePage(Model model, Principal principal) {
+        if (principal.getName())
+        model.addAttribute("name", principal.getName());
+
+        return "profile";
+    }
+
     @GetMapping("/hero")
     public String heroPage() {
         return "hero";
     }
 
-    @GetMapping("/login")
-    public String loginPage() {
-        return "login";
-    }
+//    @GetMapping("/login")
+//    public String loginPage() {
+//        return "login";
+//    }
 
-    @GetMapping("/registration")
-    public String registrationPage() {
-        return "reg_select_type";
-    }
-
-    @GetMapping("/registrationForm")
-    public String registrationFormPage() {
-        return "registration";
-    }
+//    @GetMapping("/registration")
+//    public String registrationPage() {
+//        return "reg_select_type";
+//    }
+//
+//    @GetMapping("/registrationForm")
+//    public String registrationFormPage() {
+//        return "registration";
+//    }
 
     @GetMapping("/newTaskForm")
     public String newTaskFormPage() {
