@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Задания</title>
+</head>
+<body>
+
+<div layout:fragment="content" class="container my-2">
+    <h2 class="text-center">Задания</h2>
+
+<!--    <a class="btn btn-primary btn-sm mb-3">Добавить</a>-->
+    <table class="table table-striped table-hover table-bordered table-responsive">
+        <thead>
+        <tr>
+            <th scope="col">Дата сдачи</th>
+            <th scope="col">Дисциплина</th>
+            <th scope="col">Дата обновления</th>
+            <th scope="col">Действия</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <th scope="row">27.01.2022</th>
+            <td>Математический анализ</td>
+            <td>28.01.2022</td>
+            <td>
+                <a class="btn btn-primary btn-sm">Открыть</a>
+                <!--                <a class="btn btn-primary">Изменить</a>-->
+                <!--                <a class="btn btn-danger">Удалить</a>-->
+            </td>
+        </tr>
+        <tr>
+            <th scope="row">28.01.2022</th>
+            <td>Культура речи</td>
+            <td>29.01.2022</td>
+            <td>
+                <a class="btn btn-primary btn-sm">Открыть</a>
+                <!--                <a class="btn btn-primary">Изменить</a>-->
+                <!--                <a class="btn btn-danger">Удалить</a>-->
+            </td>
+        </tr>
+        <tr>
+            <th scope="row">25.01.2022</th>
+            <td>Информационные технологии</td>
+            <td>30.01.2022</td>
+            <td>
+                <a class="btn btn-primary btn-sm">Открыть</a>
+<!--                <a class="btn btn-primary">Изменить</a>-->
+<!--                <a class="btn btn-danger">Удалить</a>-->
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+
+
+
+</div>
+
+</body>
+</html>

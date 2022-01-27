@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Новое задание</title>
+</head>
+<body>
+
+<div layout:fragment="content" class="container my-4">
+    <h1 class="h3 text-center my-4">Добавление нового задания</h1>
+
+    <form class="row g-3 needs-validation" novalidate>
+        <div class="fs-5 text-center">Для кого задание:</div>
+
+        <div class="col-md-6">
+            <div class="form-floating">
+                <select class="form-select col-md-6" aria-label="Default select example" id="disciplinesBlock"
+                        aria-describedby="disciplinesHelpBlock" required>
+                    <option selected disabled value="">Выберите...</option>
+                    <option value="1">Мехмат</option>
+                    <option value="2">Книт</option>
+                    <option value="3">Иняз</option>
+                </select>
+                <label for="disciplinesBlock" class="form-label">Факультет</label>
+                <div class="invalid-feedback">
+                    Это обязательное поле.
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-floating mb-3">
+                <input type="number" class="form-control" id="groupNumberInput" aria-describedby="groupNumberHelp"
+                       placeholder="Group number" min="100" max="600" required>
+                <label for="groupNumberInput" class="form-label">Номер группы</label>
+                <div class="invalid-feedback">
+                    Это обязательное поле.
+                </div>
+                <div id="groupNumberHelp" class="form-text">Укажите номер группы. <i>Например: 121</i></div>
+            </div>
+        </div>
+
+        <div class="fs-5 text-center">Детали задания:</div>
+
+        <div class="col-md-12">
+            <div class="form-floating">
+                <select class="form-select col-md-6" id="disciplineSelectInput" aria-label="Default select example"
+                        aria-describedby="disciplinesHelpBlock" required>
+                    <option selected disabled value="">Выберите дисциплину...</option>
+                    <option value="1">Математический анализ</option>
+                    <option value="2">Культура речи</option>
+                    <option value="3">Физическая культура</option>
+                </select>
+                <label for="disciplineSelectInput" class="form-label">Дисциплина</label>
+                <div class="invalid-feedback">
+                    Это обязательное поле.
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="form-floating">
+                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
+                          aria-describedby="floatingTextareaHelp" style="height: 150px" maxlength="1000" required></textarea>
+                <label for="floatingTextarea2">Текст задания</label>
+                <div class="invalid-feedback">
+                    Это обязательное поле.
+                </div>
+                <div id="floatingTextareaHelp" class="form-text">
+                    Введите текст задания, укажите ссылки при необходимости.
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="form-group">
+                <label class="mb-1" for="inputDate">Введите дату и время:</label>
+                <input type="datetime-local" id="inputDate" class="form-control"
+                       aria-describedby="inputDateHelp" required>
+                <div class="invalid-feedback">
+                    Это обязательное поле.
+                </div>
+                <div id="inputDateHelp" class="form-text">
+                    Укажите крайний срок сдачи.
+                </div>
+            </div>
+        </div>
+
+        <!--        <div class="col-md-12">-->
+        <!--            <label for="exampleInputEmail1" class="form-label">Преподаваемые дисциплины</label>-->
+        <!--            <select multiple size="5" class="form-select col-md-6" aria-label="Default select example"-->
+        <!--                    aria-describedby="disciplinesHelpBlock" required>-->
+        <!--                <option value="1">Математика</option>-->
+        <!--                <option value="2">Русский</option>-->
+        <!--                <option value="3">Английский</option>-->
+        <!--            </select>-->
+        <!--            <div class="invalid-feedback">-->
+        <!--                Вы должны выбрать как минимум одну дисциплину.-->
+        <!--            </div>-->
+        <!--            <div id="disciplinesHelpBlock" class="form-text">-->
+        <!--                Удерживайте клавишу Ctrl чтобы выбрать несколько дисциплин.-->
+        <!--            </div>-->
+        <!--        </div>-->
+
+        <button type="submit" class="shadow btn btn-primary">Добавить задание</button>
+    </form>
+
+    <script>
+        var today = new Date().toISOString().substring(0,16);
+        document.getElementById("inputDate").min = today;
+    </script>
+</div>
+
+</body>
+</html>

@@ -8,16 +8,40 @@
 <body>
 
 <div layout:fragment="content">
-    <section class="my-5">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <h1>About Us</h1>
-                    <p>Lorem ipsum dolor sit amet, [...]</p>
+    <div class="b-example-divider"></div>
+
+    <div class="container px-4 py-5" id="hanging-icons">
+        <h2 class="pb-2 border-bottom">Добро пожаловать, пользователь!</h2>
+        <div class="row g-5 py-5 row-cols-1 row-cols-lg-3">
+            <div class="col d-flex align-items-start">
+                <div>
+                    <h2>Задания</h2>
+                    <p>Перейдите к системе создания и просмотра домашних заданий.</p>
+                    <a href="/tasks" class="btn btn-primary">
+                        <i class="bi bi-journal-bookmark"></i> К заданиям
+                    </a>
+                </div>
+            </div>
+            <div class="col d-flex align-items-start">
+                <div>
+                    <h2>Решения</h2>
+                    <p>Система проверки и публикации решений домашних заданий.</p>
+                    <a href="/solutions" class="btn btn-primary">
+                        <i class="bi bi-journal-check"></i> К решениям
+                    </a>
+                </div>
+            </div>
+            <div class="col d-flex align-items-start">
+                <div>
+                    <h2>Пользователи</h2>
+                    <p>Перейдите к просмотру пользователей группы своей учетной записи.</p>
+                    <a href="/users" class="btn btn-primary">
+                        <i class="bi bi-people"></i> К пользователям
+                    </a>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 </div>
 
 </body>

@@ -46,6 +46,9 @@ public class User {
     @NotBlank(message = "Необходимо указать отчество")
     private String middleName;
 
+    @Column(name="user_type", insertable = false, updatable = false)
+    protected String userType;
+
 }
 
 

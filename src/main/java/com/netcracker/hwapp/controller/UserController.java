@@ -1,14 +1,10 @@
 package com.netcracker.hwapp.controller;
 
-import com.netcracker.hwapp.dto.UserCreateDTO;
-import com.netcracker.hwapp.dto.UserUpdateDTO;
-import com.netcracker.hwapp.exception.UserAlreadyExistsException;
 import com.netcracker.hwapp.exception.UserNotFoundException;
 import com.netcracker.hwapp.model.User;
 import com.netcracker.hwapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -56,7 +52,7 @@ public class UserController {
     public String showUserProfile(@RequestParam Long id,
                                   Model model) throws UserNotFoundException {
         model.addAttribute("user", userService.getUserById(id));
-        return "user_profile";
+        return "/profile/show_profile";
     }
 
     @GetMapping("/page/{pageNumber}")
