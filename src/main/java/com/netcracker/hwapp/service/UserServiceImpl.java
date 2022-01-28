@@ -1,21 +1,17 @@
 package com.netcracker.hwapp.service;
 
-import com.netcracker.hwapp.dto.UserRegistrationDto;
-import com.netcracker.hwapp.model.RoleEntity;
-import com.netcracker.hwapp.model.User;
+import com.netcracker.hwapp.dto.StudentRegistrationDto;
+import com.netcracker.hwapp.dto.TeacherRegistrationDto;
+import com.netcracker.hwapp.enums.Role;
+import com.netcracker.hwapp.exception.UserAlreadyExistsException;
+import com.netcracker.hwapp.model.*;
+import com.netcracker.hwapp.repository.GroupRepo;
 import com.netcracker.hwapp.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -24,18 +20,44 @@ public class UserServiceImpl implements UserService {
     private UserRepo userRepo;
 
     @Autowired
+    private GroupRepo groupRepo;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Override
-    public User save(UserRegistrationDto userRegistrationDto) {
-        User user = new User();
-        user.setEmail(userRegistrationDto.getEmail());
-        user.setPassword(passwordEncoder.encode(userRegistrationDto.getPassword()));
-        user.setFirstName(userRegistrationDto.getFirstName());
-        user.setLastName(userRegistrationDto.getLastName());
-        user.setMiddleName(userRegistrationDto.getMiddleName());
-        user.setRoles(Arrays.asList(new RoleEntity("ROLE_USER")));
-        return userRepo.save(user);
+    public Teacher create(TeacherRegistrationDto teacherRegistrationDto) throws UserAlreadyExistsException {
+        if (userRepo.findByEmail(teacherRegistrationDto.getEmail()) != null) {
+            throw new UserAlreadyExistsException("Пользователь с таким email уже существует.");
+        }
+        Teacher teacher = new Teacher();
+        teacher.setEmail(teacherRegistrationDto.getEmail());
+        teacher.setPassword(passwordEncoder.encode(teacherRegistrationDto.getPassword()));
+        teacher.setFirstName(teacherRegistrationDto.getFirstName());
+        teacher.setLastName(teacherRegistrationDto.getLastName());
+        teacher.setMiddleName(teacherRegistrationDto.getMiddleName());
+        teacher.setDisciplines(teacherRegistrationDto.getDisciplines());
+        teacher.setRole(Role.teacher);
+        userRepo.save(teacher);
+        return teacher;
+    }
+
+    @Override
+    public Student create(StudentRegistrationDto studentRegistrationDto) throws UserAlreadyExistsException {
+        if (userRepo.findByEmail(studentRegistrationDto.getEmail()) != null) {
+            throw new UserAlreadyExistsException("Пользователь с таким email уже существует.");
+        }
+        Student student = new Student();
+        student.setEmail(studentRegistrationDto.getEmail());
+        student.setPassword(passwordEncoder.encode(studentRegistrationDto.getPassword()));
+        student.setFirstName(studentRegistrationDto.getFirstName());
+        student.setLastName(studentRegistrationDto.getLastName());
+        student.setMiddleName(studentRegistrationDto.getMiddleName());
+        student.setGroup(getGroupByFacultyNameAndGroupNumber(studentRegistrationDto.getFaculty(),
+                studentRegistrationDto.getGroup().getNumber()));
+        student.setRole(Role.student);
+        userRepo.save(student);
+        return student;
     }
 
     @Override
@@ -45,10 +67,10 @@ public class UserServiceImpl implements UserService {
             throw new UsernameNotFoundException("Неверный email или пароль.");
         }
         return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(),
-                mapRolesToAuthorities(user.getRoles()));
+                user.getRole().getAuthorities());
     }
 
-    private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<RoleEntity> roles) {
-        return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
+    public Group getGroupByFacultyNameAndGroupNumber(Faculty faculty, Integer groupNumber) {
+        return groupRepo.findByFacultyNameAndNumber(faculty, groupNumber);
     }
 }

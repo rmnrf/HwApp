@@ -29,7 +29,7 @@ class HomeController {
 
     @GetMapping("/profile")
     public String profilePage(Model model, Principal principal) {
-        if (principal.getName())
+        if (principal.getName() != null)
         model.addAttribute("name", principal.getName());
 
         return "profile";

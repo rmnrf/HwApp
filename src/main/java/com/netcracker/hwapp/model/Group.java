@@ -12,11 +12,12 @@ import java.util.Set;
 @Table(name = "groups")
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 public class Group {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private Integer number;
 
     @JsonIgnore

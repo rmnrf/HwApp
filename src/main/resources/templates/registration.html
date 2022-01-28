@@ -8,41 +8,165 @@
 </head>
 <body>
 
-<div layout:fragment="content" class="container my-4">
+<div th:switch="${userType}" layout:fragment="content" class="container my-4">
     <h3 class="text-center my-4">Регистрация пользователя</h3>
     <br>
 
-    <form th:action="@{/registration}" method="post" th:object="${user}" class="row g-3 needs-validation" novalidate
-          oninput='up2.setCustomValidity(up2.value != up.value ? "Пароли не совпадают." : "")'>
+    <form th:case="'student'" th:action="@{/registration/student}" method="post" th:object="${student}" class="row g-3 needs-validation" novalidate
+              oninput='up2.setCustomValidity(up2.value !== up.value ? "Пароли не совпадают." : "")'>
+            <div class="col-md-12">
+                <div class="form-floating mb-3">
+                    <input th:field="*{email}" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                           placeholder="name@example.com" required>
+                    <label for="exampleInputEmail1" class="form-label">E-mail адрес</label>
+                    <div class="invalid-feedback">
+                        Введите e-mail адрес в формате name@mail.com!
+                    </div>
+                    <div id="emailHelp" class="form-text">Указанный e-mail будет виден другим пользователям.</div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-floating mb-3">
+                    <input th:field="*{password}" type="password" class="form-control" id="exampleInputPassword1" aria-describedby="passwordHelp"
+                           placeholder="Password" required minlength="8" maxlength="50" name="up">
+                    <label for="exampleInputPassword1" class="form-label">Пароль</label>
+                    <div class="invalid-feedback">
+                        Укажите корректный пароль!
+                    </div>
+                    <div id="passwordHelp" class="form-text">Длина пароля минимум 8 символов.</div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-floating">
+                    <input type="password" class="form-control" id="inputPassword4"
+                           placeholder="Password" required minlength="8" maxlength="50" name="up2">
+                    <label for="inputPassword4" class="form-label">Повтор пароля</label>
+                    <div class="invalid-feedback">
+                        Пароли должны совпадать!
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-floating mb-3">
+                    <input th:field="*{lastName}" type="text" class="form-control" id="lastNameInput" placeholder="Last Name"
+                           minlength="1" maxlength="30" pattern="^[a-zA-Zа-яА-ЯёЁ]+$" required>
+                    <label for="lastNameInput" class="form-label">Фамилия</label>
+                    <div class="invalid-feedback">
+                        Это обязательное поле.
+                    </div>
+                    <div class="invalid-feedback">
+                        Цифры не допускаются.
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-floating mb-3">
+                    <input th:field="*{firstName}" type="text" class="form-control" id="firstNameInput" placeholder="First Name"
+                           minlength="1" maxlength="30" pattern="^[a-zA-Zа-яА-ЯёЁ]+$" required>
+                    <label for="firstNameInput" class="form-label">Имя</label>
+                    <div class="invalid-feedback">
+                        Это обязательное поле.
+                    </div>
+                    <div class="invalid-feedback">
+                        Цифры не допускаются.
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-floating mb-3">
+                    <input th:field="*{middleName}" type="text" class="form-control" id="middleNameInput" placeholder="Middle Name"
+                           minlength="1" maxlength="30" pattern="^[a-zA-Zа-яА-ЯёЁ]+$" required>
+                    <label for="middleNameInput" class="form-label">Отчество</label>
+                    <div class="invalid-feedback">
+                        Это обязательное поле.
+                    </div>
+                    <div class="invalid-feedback">
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-floating">
+                    <select th:field="*{faculty}" class="form-select col-md-6" aria-label="Default select example"
+                            aria-describedby="disciplinesHelpBlock" required>
+                        <option selected disabled value="">Выберите...</option>
+                        <option th:each="faculty : ${faculties}"
+                                th:value="${faculty.getId()}"
+                                th:text="${faculty.getName()}"></option>
+                        <!--                    <option value="1">Мехмат</option>-->
+                        <!--                    <option value="2">Книт</option>-->
+                        <!--                    <option value="3">Иняз</option>-->
+                    </select>
+                    <label for="exampleInputEmail1" class="form-label">Факультет</label>
+                    <div class="invalid-feedback">
+                        Это обязательное поле.
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-floating mb-3">
+                    <input th:field="*{group}" type="number" class="form-control" id="groupNumberInput" aria-describedby="groupNumberHelp"
+                           placeholder="Group number" min="100" max="600" required>
+                    <label for="groupNumberInput" class="form-label">Номер группы</label>
+                    <div class="invalid-feedback">
+                        Это обязательное поле.
+                    </div>
+                    <div id="groupNumberHelp" class="form-text">Укажите номер группы. <i>Например: 121</i></div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="mb-3 form-check">
+                    <input type="checkbox" class="form-check-input" id="exampleCheck1" required>
+                    <label class="form-check-label" for="exampleCheck1">Я согласен с <a th:href="@{'/rules'}" target="_blank">правилами</a> сервиса</label>
+                    <div class="invalid-feedback">
+                        Вы должны согласиться с правилами сервиса.
+                    </div>
+                </div>
+            </div>
+
+            <input th:field="*{role}" value="student" type="hidden">
+
+            <button type="submit" class="shadow btn btn-primary">Зарегистрироваться</button>
+        </form>
+    <form th:case="'teacher'" th:action="@{/registration/teacher}" method="post" th:object="${teacher}" class="row g-3 needs-validation" novalidate
+          oninput='up2.setCustomValidity(up2.value !== up.value ? "Пароли не совпадают." : "")'>
         <div class="col-md-12">
             <div class="form-floating mb-3">
-                <input th:field="*{email}" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                <input th:field="*{email}" type="email" class="form-control" id="exampleInputEmail12" aria-describedby="emailHelp2"
                        placeholder="name@example.com" required>
-                <label for="exampleInputEmail1" class="form-label">E-mail адрес</label>
+                <label for="exampleInputEmail12" class="form-label">E-mail адрес</label>
                 <div class="invalid-feedback">
                     Введите e-mail адрес в формате name@mail.com!
                 </div>
-                <div id="emailHelp" class="form-text">Указанный e-mail будет виден другим пользователям.</div>
+                <div id="emailHelp2" class="form-text">Указанный e-mail будет виден другим пользователям.</div>
             </div>
         </div>
 
         <div class="col-md-6">
             <div class="form-floating mb-3">
-                <input th:field="*{password}" type="password" class="form-control" id="exampleInputPassword1" aria-describedby="passwordHelp"
-                       placeholder="Password" required minlength="8" maxlength="50" name=up>
-                <label for="exampleInputPassword1" class="form-label">Пароль</label>
+                <input th:field="*{password}" type="password" class="form-control" id="exampleInputPassword12" aria-describedby="passwordHelp2"
+                       placeholder="Password" required minlength="8" maxlength="50" name="up">
+                <label for="exampleInputPassword12" class="form-label">Пароль</label>
                 <div class="invalid-feedback">
                     Укажите корректный пароль!
                 </div>
-                <div id="passwordHelp" class="form-text">Длина пароля минимум 8 символов.</div>
+                <div id="passwordHelp2" class="form-text">Длина пароля минимум 8 символов.</div>
             </div>
         </div>
 
         <div class="col-md-6">
             <div class="form-floating">
-                <input type="password" class="form-control" id="inputPassword4"
-                       placeholder="Password" required minlength="8" maxlength="50" name=up2>
-                <label for="inputPassword4" class="form-label">Повтор пароля</label>
+                <input type="password" class="form-control" id="inputPassword42"
+                       placeholder="Password" required minlength="8" maxlength="50" name="up2">
+                <label for="inputPassword42" class="form-label">Повтор пароля</label>
                 <div class="invalid-feedback">
                     Пароли должны совпадать!
                 </div>
@@ -51,9 +175,9 @@
 
         <div class="col-md-4">
             <div class="form-floating mb-3">
-                <input th:field="*{lastName}" type="text" class="form-control" id="lastNameInput" placeholder="Last Name"
+                <input th:field="*{lastName}" type="text" class="form-control" id="lastNameInput2" placeholder="Last Name"
                        minlength="1" maxlength="30" pattern="^[a-zA-Zа-яА-ЯёЁ]+$" required>
-                <label for="lastNameInput" class="form-label">Фамилия</label>
+                <label for="lastNameInput2" class="form-label">Фамилия</label>
                 <div class="invalid-feedback">
                     Это обязательное поле.
                 </div>
@@ -65,9 +189,9 @@
 
         <div class="col-md-4">
             <div class="form-floating mb-3">
-                <input th:field="*{firstName}" type="text" class="form-control" id="firstNameInput" placeholder="First Name"
+                <input th:field="*{firstName}" type="text" class="form-control" id="firstNameInput2" placeholder="First Name"
                        minlength="1" maxlength="30" pattern="^[a-zA-Zа-яА-ЯёЁ]+$" required>
-                <label for="firstNameInput" class="form-label">Имя</label>
+                <label for="firstNameInput2" class="form-label">Имя</label>
                 <div class="invalid-feedback">
                     Это обязательное поле.
                 </div>
@@ -79,71 +203,48 @@
 
         <div class="col-md-4">
             <div class="form-floating mb-3">
-                <input th:field="*{middleName}" type="text" class="form-control" id="middleNameInput" placeholder="Middle Name"
+                <input th:field="*{middleName}" type="text" class="form-control" id="middleNameInput2" placeholder="Middle Name"
                        minlength="1" maxlength="30" pattern="^[a-zA-Zа-яА-ЯёЁ]+$" required>
-                <label for="middleNameInput" class="form-label">Отчество</label>
+                <label for="middleNameInput2" class="form-label">Отчество</label>
                 <div class="invalid-feedback">
                     Это обязательное поле.
                 </div>
                 <div class="invalid-feedback">
-                    Цифры не допускаются.
+
                 </div>
             </div>
         </div>
 
-<!--        <div class="col-md-6">-->
-<!--            <div class="form-floating">-->
-<!--                <select class="form-select col-md-6" aria-label="Default select example"-->
-<!--                        aria-describedby="disciplinesHelpBlock" required>-->
-<!--                    <option selected disabled value="">Выберите...</option>-->
-<!--                    <option value="1">Мехмат</option>-->
-<!--                    <option value="2">Книт</option>-->
-<!--                    <option value="3">Иняз</option>-->
-<!--                </select>-->
-<!--                <label for="exampleInputEmail1" class="form-label">Факультет</label>-->
-<!--                <div class="invalid-feedback">-->
-<!--                    Это обязательное поле.-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
+        <div class="col-md-12">
+            <label for="exampleInputEmail12" class="form-label">Преподаваемые дисциплины</label>
+            <select multiple size="5" class="form-select col-md-6" aria-label="Default select example"
+                    aria-describedby="disciplinesHelpBlock2" required>
+                <option th:each="discipline : ${disciplines}"
+                        th:value="${discipline.getId()}"
+                        th:text="${discipline.getName()}"></option>
+                <!--                <option value="1">Математика</option>-->
+                <!--                <option value="2">Русский</option>-->
+                <!--                <option value="3">Английский</option>-->
+            </select>
+            <div class="invalid-feedback">
+                Вы должны выбрать как минимум одну дисциплину.
+            </div>
+            <div id="disciplinesHelpBlock2" class="form-text">
+                Удерживайте клавишу Ctrl, чтобы выбрать несколько дисциплин.
+            </div>
+        </div>
 
-<!--        <div class="col-md-6">-->
-<!--            <div class="form-floating mb-3">-->
-<!--                <input type="number" class="form-control" id="groupNumberInput" aria-describedby="groupNumberHelp"-->
-<!--                       placeholder="Group number" min="100" max="600" required>-->
-<!--                <label for="groupNumberInput" class="form-label">Номер группы</label>-->
-<!--                <div class="invalid-feedback">-->
-<!--                    Это обязательное поле.-->
-<!--                </div>-->
-<!--                <div id="groupNumberHelp" class="form-text">Укажите номер группы. <i>Например: 121</i></div>-->
-<!--            </div>-->
-<!--        </div>-->
+        <div class="col-md-4">
+            <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" id="exampleCheck12" required>
+                <label class="form-check-label" for="exampleCheck12">Я согласен с <a th:href="@{'/rules'}" target="_blank">правилами</a> сервиса</label>
+                <div class="invalid-feedback">
+                    Вы должны согласиться с правилами сервиса.
+                </div>
+            </div>
+        </div>
 
-<!--        <div class="col-md-12">-->
-<!--            <label for="exampleInputEmail1" class="form-label">Преподаваемые дисциплины</label>-->
-<!--            <select multiple size="5" class="form-select col-md-6" aria-label="Default select example"-->
-<!--                    aria-describedby="disciplinesHelpBlock" required>-->
-<!--                <option value="1">Математика</option>-->
-<!--                <option value="2">Русский</option>-->
-<!--                <option value="3">Английский</option>-->
-<!--            </select>-->
-<!--            <div class="invalid-feedback">-->
-<!--                Вы должны выбрать как минимум одну дисциплину.-->
-<!--            </div>-->
-<!--            <div id="disciplinesHelpBlock" class="form-text">-->
-<!--                Удерживайте клавишу Ctrl чтобы выбрать несколько дисциплин.-->
-<!--            </div>-->
-<!--        </div>-->
-
-<!--        <div class="col-md-4">-->
-<!--            <div class="mb-3 form-check">-->
-<!--                <input type="checkbox" class="form-check-input" id="exampleCheck1" required>-->
-<!--                <label class="form-check-label" for="exampleCheck1">Я согласен с <a th:href="@{'/rules'}" target="_blank">правилами</a> сервиса</label>-->
-<!--                <div class="invalid-feedback">-->
-<!--                    Вы должны согласиться с правилами сервиса.-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
+        <input th:field="*{role}" value="teacher" type="hidden">
 
         <button type="submit" class="shadow btn btn-primary">Зарегистрироваться</button>
     </form>

@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DisciplineDTO implements DTOEntity {
+
     private Long id;
     private String name;
+
 }

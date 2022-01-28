@@ -11,11 +11,12 @@ import java.util.Set;
 @Table(name = "faculties")
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 public class Faculty {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String name;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "faculty")

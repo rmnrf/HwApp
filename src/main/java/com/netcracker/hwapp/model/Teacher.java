@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
 import java.util.List;
 import java.util.Set;
 
@@ -14,10 +13,14 @@ import java.util.Set;
 @Table(name = "teachers")
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
-@DiscriminatorValue("Teacher")
+@DiscriminatorValue("Преподаватель")
 public class Teacher extends User {
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "teacher")
     @JsonIgnore
     private List<Task> tasks;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private Set<Discipline> disciplines;
+
 }
