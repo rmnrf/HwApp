@@ -13,6 +13,7 @@ import javax.persistence.*;
 public class Student extends User {
 
     @ManyToOne
+    @JoinColumn(name = "group_id")
     private Group group;
 
 }

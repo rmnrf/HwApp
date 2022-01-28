@@ -27,13 +27,13 @@ class HomeController {
         return "contact";
     }
 
-    @GetMapping("/profile")
-    public String profilePage(Model model, Principal principal) {
-        if (principal.getName() != null)
-        model.addAttribute("name", principal.getName());
-
-        return "profile";
-    }
+//    @GetMapping("/profile")
+//    public String profilePage(Model model, Principal principal) {
+//        if (principal.getName() != null)
+//        model.addAttribute("name", principal.getName());
+//
+//        return "profile";
+//    }
 
     @GetMapping("/hero")
     public String heroPage() {
@@ -57,17 +57,17 @@ class HomeController {
 
     @GetMapping("/newTaskForm")
     public String newTaskFormPage() {
-        return "new_task";
+        return "/task/new_task";
     }
 
     @GetMapping("/editTaskForm")
     public String editTaskFormPage() {
-        return "edit_task";
+        return "/task/edit_task";
     }
 
     @GetMapping("/showTaskForm")
     public String showTaskFormPage() {
-        return "show_task";
+        return "/task/show_task";
     }
 
     @GetMapping("/newSolutionForm")

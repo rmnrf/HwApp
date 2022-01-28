@@ -19,7 +19,7 @@ public class UserController {
     @Autowired
     private UserServiceImpl2 userService;
 
-    @GetMapping("/1")
+    @GetMapping("/test")
     public String viewHomePage(Model model) {
         return findPaginated(1, "firstName", "asc", model);
     }

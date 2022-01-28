@@ -5,7 +5,7 @@
     <!--Guest Header-->
     <div th:fragment="guest-header" class="container">
         <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
-            <a href="/hero" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
+            <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
                 <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" class="bi bi-mortarboard mx-1"
                      viewBox="0 0 16 16">
                     <path d="M8.211 2.047a.5.5 0 0 0-.422 0l-7.5 3.5a.5.5 0 0 0 .025.917l7.5 3a.5.5 0 0 0 .372 0L14 7.14V13a1 1 0 0 0-1 1v2h3v-2a1 1 0 0 0-1-1V6.739l.686-.275a.5.5 0 0 0 .025-.917l-7.5-3.5ZM8 8.46 1.758 5.965 8 3.052l6.242 2.913L8 8.46Z"/>
@@ -50,7 +50,7 @@
                         <i class="bi bi-person"></i> <span sec:authentication="name">Пользователь</span>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a class="dropdown-item" href="#"><i class="bi bi-person-lines-fill"></i> Профиль</a></li>
+                        <li><a th:href="@{/profile}" class="dropdown-item" href="#"><i class="bi bi-person-lines-fill"></i> Профиль</a></li>
                         <li><a class="dropdown-item" href="#"><i class="bi bi-gear-fill"></i> Редактировать</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <form th:action="@{/logout}" action="/" method="post">

@@ -12,7 +12,7 @@
     <h3 class="text-center my-4">Регистрация пользователя</h3>
     <br>
 
-    <form th:case="'student'" th:action="@{/registration/student}" method="post" th:object="${student}" class="row g-3 needs-validation" novalidate
+    <form th:case="'student'" th:action="@{/registration/student}" method="post" th:object="${student}" class="row g-3" novalidate
               oninput='up2.setCustomValidity(up2.value !== up.value ? "Пароли не совпадают." : "")'>
             <div class="col-md-12">
                 <div class="form-floating mb-3">
@@ -112,7 +112,7 @@
 
             <div class="col-md-6">
                 <div class="form-floating mb-3">
-                    <input th:field="*{group}" type="number" class="form-control" id="groupNumberInput" aria-describedby="groupNumberHelp"
+                    <input th:field="*{groupNumber}" type="number" class="form-control" id="groupNumberInput" aria-describedby="groupNumberHelp"
                            placeholder="Group number" min="100" max="600" required>
                     <label for="groupNumberInput" class="form-label">Номер группы</label>
                     <div class="invalid-feedback">
@@ -132,11 +132,10 @@
                 </div>
             </div>
 
-            <input th:field="*{role}" value="student" type="hidden">
-
             <button type="submit" class="shadow btn btn-primary">Зарегистрироваться</button>
         </form>
-    <form th:case="'teacher'" th:action="@{/registration/teacher}" method="post" th:object="${teacher}" class="row g-3 needs-validation" novalidate
+
+    <form th:case="'teacher'" th:action="@{/registration/teacher}" method="post" th:object="${teacher}" class="row g-3" novalidate
           oninput='up2.setCustomValidity(up2.value !== up.value ? "Пароли не совпадают." : "")'>
         <div class="col-md-12">
             <div class="form-floating mb-3">
@@ -217,7 +216,7 @@
 
         <div class="col-md-12">
             <label for="exampleInputEmail12" class="form-label">Преподаваемые дисциплины</label>
-            <select multiple size="5" class="form-select col-md-6" aria-label="Default select example"
+            <select th:field="*{disciplines}" multiple size="4" class="form-select col-md-6" aria-label="Default select example"
                     aria-describedby="disciplinesHelpBlock2" required>
                 <option th:each="discipline : ${disciplines}"
                         th:value="${discipline.getId()}"
@@ -243,8 +242,6 @@
                 </div>
             </div>
         </div>
-
-        <input th:field="*{role}" value="teacher" type="hidden">
 
         <button type="submit" class="shadow btn btn-primary">Зарегистрироваться</button>
     </form>

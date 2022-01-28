@@ -20,7 +20,7 @@ public class Teacher extends User {
     @JsonIgnore
     private List<Task> tasks;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    private Set<Discipline> disciplines;
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Discipline> disciplines;
 
 }

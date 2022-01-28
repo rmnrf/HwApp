@@ -1,7 +1,5 @@
 package com.netcracker.hwapp.controller;
 
-import com.netcracker.hwapp.dto.TeacherCreateDTO;
-import com.netcracker.hwapp.dto.TeacherUpdateDTO;
 import com.netcracker.hwapp.exception.UserAlreadyExistsException;
 import com.netcracker.hwapp.exception.UserNotFoundException;
 import com.netcracker.hwapp.model.Teacher;

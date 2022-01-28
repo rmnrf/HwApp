@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -80,23 +81,27 @@ public class RegistrationController {
         return "reg_select_type";
     }
 
-//    @PostMapping
-//    public String registerUserAccount(@ModelAttribute("user") UserRegistrationDto userRegistrationDto) {
-//        userService.save(userRegistrationDto);
-//        return "redirect:/login?success";
-//    }
-
     @PostMapping("/student")
-    public String registerStudentAccount(@ModelAttribute("student") StudentRegistrationDto studentRegistrationDto)
-            throws UserAlreadyExistsException {
-        userService.create(studentRegistrationDto);
-        return "redirect:/login?success";
+    public String registerStudentAccount(
+            @ModelAttribute("student")
+            @Valid StudentRegistrationDto studentRegistrationDto) {
+        try {
+            userService.create(studentRegistrationDto);
+            return "redirect:/login?success";
+        } catch (Exception e) {
+            return "redirect:/?error";
+        }
     }
 
     @PostMapping("/teacher")
-    public String registerTeacherAccount(@ModelAttribute("teacher") TeacherRegistrationDto teacherRegistrationDto)
-            throws UserAlreadyExistsException {
-        userService.create(teacherRegistrationDto);
-        return "redirect:/login?success";
+    public String registerTeacherAccount(
+            @ModelAttribute("teacher")
+            @Valid TeacherRegistrationDto teacherRegistrationDto) {
+        try {
+            userService.create(teacherRegistrationDto);
+            return "redirect:/login?success";
+        } catch (Exception e) {
+            return "redirect:/?error";
+        }
     }
 }

@@ -20,12 +20,10 @@ public class Group {
 
     private Integer number;
 
-    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "faculties_id")
     private Faculty faculty;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "group")
-    private Set<Student> students;
+//    @OneToMany
+//    private Set<Student> students;
 }

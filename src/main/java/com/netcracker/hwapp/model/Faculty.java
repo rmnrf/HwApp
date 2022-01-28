@@ -19,6 +19,6 @@ public class Faculty {
 
     private String name;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "faculty")
-    private Set<Group> groups;
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "faculty")
+//    private Set<Group> groups;
 }

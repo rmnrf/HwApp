@@ -1,17 +1,16 @@
 package com.netcracker.hwapp.dto;
 
 import com.netcracker.hwapp.model.Faculty;
-import com.netcracker.hwapp.model.Group;
 import lombok.Data;
 
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Data
 public class StudentRegistrationDto extends UserRegistrationDto {
 
-    @NotEmpty(message = "Укажите номер группы")
-    private Group group;
+    private Integer groupNumber;
 
-    @NotEmpty(message = "Укажите факультет")
+    @NotNull(message = "Укажите факультет")
     private Faculty faculty;
 }
