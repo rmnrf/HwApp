@@ -1,6 +1,7 @@
 package com.netcracker.hwapp.controller;
 
-import com.netcracker.hwapp.repository.UserRepo;
+import com.netcracker.hwapp.exception.UserNotFoundException;
+import com.netcracker.hwapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,16 +13,29 @@ import java.security.Principal;
 public class MainController {
 
     @Autowired
-    UserRepo userRepo;
+    private UserService userService;
 
     @GetMapping
-    public String showMainPage(Model model, Principal principal) {
+    public String showMainPage(Model model, Principal principal) throws UserNotFoundException {
         if (principal == null) {
             return "index";
         }
-        model.addAttribute("user", userRepo.findByEmail(principal.getName()));
+        model.addAttribute("user", userService.findByEmail(principal.getName()));
         return "index";
     }
 
+    @GetMapping("/contact")
+    public String showContactPage() {
+        return "contact";
+    }
 
+    @GetMapping("/about")
+    public String showAboutPage() {
+        return "about";
+    }
+
+    @GetMapping("/rules")
+    public String showRulesPage() {
+        return "rules";
+    }
 }

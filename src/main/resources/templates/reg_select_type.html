@@ -17,7 +17,7 @@
                 <div class="shadow-sm card-body">
                     <div class="text-center"><h3 class="card-title">Студент</h3></div>
                     <p class="card-text fs-4 fw-light">Студент может получать задания от преподавателей и отправлять свои решения на проверку.</p>
-                    <div class="text-center"><a th:href="@{${#httpServletRequest.requestURI} + '?userType=student'}" class="shadow btn btn-primary btn-lg">Я — студент</a></div>
+                    <div class="text-center mt-4 mb-2"><a th:href="@{${#httpServletRequest.requestURI} + '?userType=student'}" class="shadow btn btn-primary btn-lg w-75">Я — студент</a></div>
                 </div>
             </div>
         </div>
@@ -26,7 +26,7 @@
                 <div class="shadow-sm card-body">
                     <div class="text-center"><h3 class="card-title">Преподаватель</h3></div>
                     <p class="card-text fs-4 fw-light">Преподаватель создает задания для студентов и имеет возможность оценивать их.</p>
-                    <div class="text-center"><a th:href="@{${#httpServletRequest.requestURI} + '?userType=teacher'}" class="shadow btn btn-primary btn-lg">Я — преподаватель</a></div>
+                    <div class="text-center mt-4 mb-2"><a th:href="@{${#httpServletRequest.requestURI} + '?userType=teacher'}" class="shadow btn btn-primary btn-lg w-75">Я — преподаватель</a></div>
                 </div>
             </div>
         </div>

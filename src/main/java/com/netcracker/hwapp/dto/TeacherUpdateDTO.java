@@ -11,7 +11,7 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class TeacherUpdateDTO extends UserUpdateDTO {
+public class TeacherUpdateDTO {
     @NotEmpty(message = "Укажите преподаваемые дисциплины")
     private Set<DisciplineDTO> disciplines;
 }

@@ -17,44 +17,6 @@ class HomeController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/home")
-    String index(Model model) {
-        return "home/homeNotSignedIn";
-    }
-
-    @GetMapping("/contact")
-    public String contactPage() {
-        return "contact";
-    }
-
-//    @GetMapping("/profile")
-//    public String profilePage(Model model, Principal principal) {
-//        if (principal.getName() != null)
-//        model.addAttribute("name", principal.getName());
-//
-//        return "profile";
-//    }
-
-    @GetMapping("/hero")
-    public String heroPage() {
-        return "hero";
-    }
-
-//    @GetMapping("/login")
-//    public String loginPage() {
-//        return "login";
-//    }
-
-//    @GetMapping("/registration")
-//    public String registrationPage() {
-//        return "reg_select_type";
-//    }
-//
-//    @GetMapping("/registrationForm")
-//    public String registrationFormPage() {
-//        return "registration";
-//    }
-
     @GetMapping("/newTaskForm")
     public String newTaskFormPage() {
         return "/task/new_task";
@@ -85,16 +47,6 @@ class HomeController {
         return "/solution/show_solution";
     }
 
-    @GetMapping("/about")
-    public String aboutPage() {
-        return "about";
-    }
-
-    @GetMapping("/rules")
-    public String rulesPage() {
-        return "rules";
-    }
-
     @GetMapping("/editProfileForm")
     public String editProfileFormPage() {
         return "/profile/edit_profile";
@@ -110,7 +62,7 @@ class HomeController {
         return "/list/solutions_list";
     }
 
-    @GetMapping("/usersList")
+    @GetMapping("/ ")
     public String usersListPage() {
         return "/list/users_list";
     }

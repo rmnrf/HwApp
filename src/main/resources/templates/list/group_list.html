@@ -1,10 +1,75 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Группа</title>
 </head>
 <body>
+
+<div layout:fragment="content" class="container my-2">
+    <h2 class="text-center">Группа <span th:text="${group.number}"></span></h2>
+    <br>
+
+    <table class="table table-bordered table-responsive-md">
+
+        <tr>
+            <th style="width: 20%">
+                <a class="text-decoration-none" th:href="@{'/page/' + ${currentPage} + '?sortField=lastName&sortDir=' + ${reverseSortDir}}">
+                    Фамилия
+                </a>
+            </th>
+            <th style="width: 20%">
+                <a class="text-decoration-none" th:href="@{'/page/' + ${currentPage} + '?sortField=firstName&sortDir=' + ${reverseSortDir}}">
+                    Имя
+                </a>
+            </th>
+            <th style="width: 20%">
+                <a class="text-decoration-none" th:href="@{'/page/' + ${currentPage} + '?sortField=middleName&sortDir=' + ${reverseSortDir}}">
+                    Отчество
+                </a>
+            </th>
+            <th style="width: 15%">
+                <a class="text-decoration-none" th:href="@{'/page/' + ${currentPage} + '?sortField=email&sortDir=' + ${reverseSortDir}}">
+                    E-mail
+                </a>
+            </th>
+            <th style="width: 25%">Действия</th>
+        </tr>
+
+        <tr th:each="student : ${students}">
+            <td th:text="${student.lastName}"></td>
+            <td th:text="${student.firstName}"></td>
+            <td th:text="${student.middleName}"></td>
+            <td th:text="${student.email}"></td>
+            <td>
+                <a th:href="@{/users(id=${student.id})}" class="btn btn-primary btn-sm">Профиль</a>
+            </td>
+        </tr>
+    </table>
+
+    <div th:if = "${totalPages > 1}">
+        <div class="row col-sm-10">
+            <div class="col-sm-2">
+                Всего записей: [[${totalItems}]]
+            </div>
+            <div class="col-sm-1">
+                    <span th:each="i: ${#numbers.sequence(1, totalPages)}">
+                        <a th:if="${currentPage != i}" th:href="@{'/page/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
+                        <span th:unless="${currentPage != i}">[[${i}]]</span> &nbsp; &nbsp;
+                    </span>
+            </div>
+            <div class="col-sm-1">
+                <a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${currentPage + 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Next</a>
+                <span th:unless="${currentPage < totalPages}">Next</span>
+            </div>
+            <div class="col-sm-1">
+                <a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${totalPages} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Last</a>
+                <span th:unless="${currentPage < totalPages}">Last</span>
+            </div>
+        </div>
+    </div>
+</div>
 
 </body>
 </html>

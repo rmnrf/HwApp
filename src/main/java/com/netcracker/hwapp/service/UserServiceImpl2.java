@@ -3,7 +3,6 @@ package com.netcracker.hwapp.service;
 import com.netcracker.hwapp.dto.DTOEntity;
 import com.netcracker.hwapp.dto.UserCreateDTO;
 import com.netcracker.hwapp.dto.UserReadDTO;
-import com.netcracker.hwapp.dto.UserUpdateDTO;
 import com.netcracker.hwapp.exception.UserAlreadyExistsException;
 import com.netcracker.hwapp.exception.UserNotFoundException;
 import com.netcracker.hwapp.model.User;
@@ -66,17 +65,17 @@ public class UserServiceImpl2 {
         return (UserCreateDTO) new DtoUtils().convertToDto(user, new UserCreateDTO());
     }
 
-    public UserUpdateDTO updateUser(UserUpdateDTO userUpdateDTO, Long id) throws UserNotFoundException {
-        Optional<User> user = userRepo.findById(id);
-        if (user.isEmpty()) {
-            throw new UserNotFoundException("Такого пользователя не существует.");
-        }
-        User userEntity = (User) new DtoUtils().convertToEntity(user.get(), userUpdateDTO);
-        //var userEntity = user.get();
-        //CopyUtils.copyProperties(userDTO, userEntity);
-        userRepo.save(userEntity);
-        return (UserUpdateDTO) new DtoUtils().convertToDto(user.get(), new UserUpdateDTO());
-    }
+//    public UserUpdateDTO updateUser(UserUpdateDTO userUpdateDTO, Long id) throws UserNotFoundException {
+//        Optional<User> user = userRepo.findById(id);
+//        if (user.isEmpty()) {
+//            throw new UserNotFoundException("Такого пользователя не существует.");
+//        }
+//        User userEntity = (User) new DtoUtils().convertToEntity(user.get(), userUpdateDTO);
+//        //var userEntity = user.get();
+//        //CopyUtils.copyProperties(userDTO, userEntity);
+//        userRepo.save(userEntity);
+//        return (UserUpdateDTO) new DtoUtils().convertToDto(user.get(), new UserUpdateDTO());
+//    }
 
     public DTOEntity readUser(Long id) throws UserNotFoundException {
         Optional<User> user = userRepo.findById(id);

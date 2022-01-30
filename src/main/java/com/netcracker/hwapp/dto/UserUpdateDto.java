@@ -1,20 +1,16 @@
 package com.netcracker.hwapp.dto;
 
+import com.netcracker.hwapp.model.User;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 @Data
 @NoArgsConstructor
-public class UserRegistrationDto implements DTOEntity {
-
-    @Email(message = "Email должен быть корректным адресом электронной почты")
-    @NotBlank(message = "Необходимо указать email")
-    private String email;
+public class UserUpdateDto {
 
     @Size(min = 8, max = 50, message = "Длина пароля должна находиться в диапазоне от 8 до 50 символов")
     @NotBlank(message = "Необходимо указать пароль")
@@ -35,6 +31,11 @@ public class UserRegistrationDto implements DTOEntity {
     @NotBlank(message = "Необходимо указать отчество")
     private String middleName;
 
-    private String role;
-
+    public static UserUpdateDto mapToDto(User entity) {
+        UserUpdateDto dto = new UserUpdateDto();
+        dto.setFirstName(entity.getFirstName());
+        dto.setLastName(entity.getLastName());
+        dto.setMiddleName(entity.getMiddleName());
+        return dto;
+    }
 }

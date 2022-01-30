@@ -6,7 +6,7 @@
     <div th:fragment="guest-header" class="container">
         <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
             <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
-                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" class="bi bi-mortarboard mx-1"
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" class="bi bi-mortarboard mx-1 my-2"
                      viewBox="0 0 16 16">
                     <path d="M8.211 2.047a.5.5 0 0 0-.422 0l-7.5 3.5a.5.5 0 0 0 .025.917l7.5 3a.5.5 0 0 0 .372 0L14 7.14V13a1 1 0 0 0-1 1v2h3v-2a1 1 0 0 0-1-1V6.739l.686-.275a.5.5 0 0 0 .025-.917l-7.5-3.5ZM8 8.46 1.758 5.965 8 3.052l6.242 2.913L8 8.46Z"/>
                     <path d="M4.176 9.032a.5.5 0 0 0-.656.327l-.5 1.7a.5.5 0 0 0 .294.605l4.5 1.8a.5.5 0 0 0 .372 0l4.5-1.8a.5.5 0 0 0 .294-.605l-.5-1.7a.5.5 0 0 0-.656-.327L8 10.466 4.176 9.032Zm-.068 1.873.22-.748 3.496 1.311a.5.5 0 0 0 .352 0l3.496-1.311.22.748L8 12.46l-3.892-1.556Z"/>
@@ -38,7 +38,7 @@
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                 <li><a href="/tasks" class="nav-link px-3 link-dark"><i class="bi bi-journal-bookmark"></i> Задания</a></li>
                 <li><a href="/solutions" class="nav-link px-3 link-dark"><i class="bi bi-journal-check"></i> Решения</a></li>
-                <li><a href="/groups" class="nav-link px-3 link-dark"><i class="bi bi-people"></i> Группа</a></li>
+                <li><a href="/group" class="nav-link px-3 link-dark"><i class="bi bi-people"></i> Группа</a></li>
                 <li><a href="/teachers" class="nav-link px-3 link-dark"><i class="bi bi-book"></i> Преподаватели</a></li>
                 <li><a href="/news" class="nav-link px-3 link-dark"><i class="bi bi-receipt"></i> Новости</a></li>
             </ul>
@@ -51,7 +51,7 @@
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end">
                         <li><a th:href="@{/profile}" class="dropdown-item" href="#"><i class="bi bi-person-lines-fill"></i> Профиль</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="bi bi-gear-fill"></i> Редактировать</a></li>
+                        <li><a th:href="@{/editProfile}" class="dropdown-item" href="#"><i class="bi bi-gear-fill"></i> Редактировать</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <form th:action="@{/logout}" action="/" method="post">
                             <button class="dropdown-item" type="submit">Выйти</button>

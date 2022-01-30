@@ -216,7 +216,7 @@
 
         <div class="col-md-12">
             <label for="exampleInputEmail12" class="form-label">Преподаваемые дисциплины</label>
-            <select th:field="*{disciplines}" multiple size="4" class="form-select col-md-6" aria-label="Default select example"
+            <select th:field="*{disciplines}" multiple class="form-select col-md-6" aria-label="Default select example"
                     aria-describedby="disciplinesHelpBlock2" required>
                 <option th:each="discipline : ${disciplines}"
                         th:value="${discipline.getId()}"

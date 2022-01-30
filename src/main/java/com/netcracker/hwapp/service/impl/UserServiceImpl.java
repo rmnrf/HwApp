@@ -2,9 +2,12 @@ package com.netcracker.hwapp.service.impl;
 
 import com.netcracker.hwapp.dto.StudentRegistrationDto;
 import com.netcracker.hwapp.dto.TeacherRegistrationDto;
+import com.netcracker.hwapp.dto.UserGetDto;
+import com.netcracker.hwapp.dto.UserUpdateDto;
 import com.netcracker.hwapp.enums.Role;
 import com.netcracker.hwapp.exception.GroupNotFoundException;
 import com.netcracker.hwapp.exception.UserAlreadyExistsException;
+import com.netcracker.hwapp.exception.UserNotFoundException;
 import com.netcracker.hwapp.model.*;
 import com.netcracker.hwapp.repository.GroupRepo;
 import com.netcracker.hwapp.repository.UserRepo;
@@ -14,6 +17,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.security.Principal;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -50,13 +56,24 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void update(UserUpdateDto dto, Principal principal) {
+        User user = userRepo.findByEmail(principal.getName());
+        user.setFirstName(dto.getFirstName());
+        user.setLastName(dto.getLastName());
+        user.setMiddleName(dto.getMiddleName());
+        user.setPassword(passwordEncoder.encode(dto.getPassword()));
+        userRepo.save(user);
+    }
+
+    @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepo.findByEmail(email);
         if (user == null) {
             throw new UsernameNotFoundException("Неверный email или пароль.");
         }
-        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(),
-                user.getRole().getAuthorities());
+        return new org.springframework.security.core.userdetails.User(
+                user.getEmail(), user.getPassword(), user.getRole().getAuthorities()
+        );
     }
 
     private Teacher mapToEntity(TeacherRegistrationDto teacherRegistrationDto) {
@@ -89,5 +106,27 @@ public class UserServiceImpl implements UserService {
         student.setGroup(group);
         student.setRole(Role.STUDENT);
         return student;
+    }
+
+    @Override
+    public UserGetDto findByEmail(String email) throws UserNotFoundException {
+        User entity = userRepo.findByEmail(email);
+        if (entity == null) {
+            throw new UserNotFoundException("Пользователь с таким e-mail не найден.");
+        }
+        UserGetDto dto = UserGetDto.mapToDto(entity);
+        return dto;
+    }
+
+    @Override
+    public UserGetDto findById(Long id) throws UserNotFoundException {
+        Optional<User> optional = userRepo.findById(id);
+        User user = null;
+        if (optional.isPresent()) {
+            user = optional.get();
+        } else {
+            throw new UserNotFoundException("Пользователь с идентификатором " + id + " не найден.");
+        }
+        return UserGetDto.mapToDto(user);
     }
 }

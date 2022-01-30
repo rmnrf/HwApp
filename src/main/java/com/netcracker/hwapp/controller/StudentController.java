@@ -3,7 +3,7 @@ package com.netcracker.hwapp.controller;
 import com.netcracker.hwapp.exception.UserAlreadyExistsException;
 import com.netcracker.hwapp.exception.UserNotFoundException;
 import com.netcracker.hwapp.model.Student;
-import com.netcracker.hwapp.service.StudentService;
+import com.netcracker.hwapp.service.StudentService2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +15,7 @@ import javax.validation.Valid;
 public class StudentController {
 
     @Autowired
-    private StudentService studentService;
+    private StudentService2 studentService;
 
     @PostMapping
     public ResponseEntity<?> create(@Valid @RequestBody Student student) {
