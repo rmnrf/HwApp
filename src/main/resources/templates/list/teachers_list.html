@@ -20,7 +20,9 @@
                     <option value="">Все</option>
                     <option th:each="discipline : ${disciplines}"
                             th:value="${discipline.getId()}"
-                            th:text="${discipline.getName()}">
+                            th:text="${discipline.getName()}"
+                            th:selected="${(param.disciplineId != null) and
+                            (param.disciplineId[0].toString().equals(discipline.getId().toString()))}">
                     </option>
                 </select>
                 <input class="form-control btn btn-outline-secondary btn" type="submit" value="Показать">
@@ -53,7 +55,7 @@
                     E-mail
                 </a>
             </th>
-            <th style="width: 25%">Действия</th>
+            <th>Действия</th>
         </tr>
 
         <tr th:each="teacher : ${teachers}">

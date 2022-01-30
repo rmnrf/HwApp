@@ -25,7 +25,8 @@ public class TeachersListController {
     private TeacherRepo teacherRepo;
 
     @GetMapping("/teachers")
-    public String showTeachersPage(@RequestParam(required = false) Long disciplineId, Model model) {
+    public String showTeachersPage(@RequestParam(value="disciplineId", required = false) Long disciplineId,
+                                   Model model) {
         List<Teacher> teachers = null;
         if (disciplineId != null) {
             teachers = teacherRepo.findByDisciplines_Id(disciplineId);
