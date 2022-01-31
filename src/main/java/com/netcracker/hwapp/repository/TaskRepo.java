@@ -8,4 +8,5 @@ import java.util.List;
 public interface TaskRepo extends JpaRepository<Task, Long> {
     List<Task> findAllByGroupsId(Long id);
     List<Task> findAllByTeacherId(Long id);
+    List<Task> findAllByTeacherEmail(String email);
 }

@@ -16,12 +16,12 @@
 
         <div class="col-md-6">
             <div class="form-floating">
-                <select class="form-select col-md-6" aria-label="Default select example" id="disciplinesBlock"
-                        aria-describedby="disciplinesHelpBlock" required>
+                <select class="form-select col-md-6" aria-label="Default select example"
+                        id="disciplinesBlock" aria-describedby="disciplinesHelpBlock" required>
                     <option selected disabled value="">Выберите...</option>
-                    <option value="1">Мехмат</option>
-                    <option value="2">Книт</option>
-                    <option value="3">Иняз</option>
+                    <option th:each="faculty : ${faculties}"
+                            th:value="${faculty.getId()}"
+                            th:text="${faculty.getName()}"></option>
                 </select>
                 <label for="disciplinesBlock" class="form-label">Факультет</label>
                 <div class="invalid-feedback">
@@ -49,9 +49,9 @@
                 <select class="form-select col-md-6" id="disciplineSelectInput" aria-label="Default select example"
                         aria-describedby="disciplinesHelpBlock" required>
                     <option selected disabled value="">Выберите дисциплину...</option>
-                    <option value="1">Математический анализ</option>
-                    <option value="2">Культура речи</option>
-                    <option value="3">Физическая культура</option>
+                    <option th:each="discipline : ${teacher.disciplines}"
+                            th:value="${discipline.getId()}"
+                            th:text="${discipline.getName()}"></option>
                 </select>
                 <label for="disciplineSelectInput" class="form-label">Дисциплина</label>
                 <div class="invalid-feedback">
