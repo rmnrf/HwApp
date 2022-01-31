@@ -11,14 +11,16 @@
 <div layout:fragment="content" class="container my-4">
     <h1 class="h3 text-center my-4">Редактирование задания</h1>
 
-    <form class="row g-3 needs-validation" novalidate>
+    <form th:action="@{/tasks/edit}" method="post" th:object="${task}" class="row g-3 needs-validation" novalidate>
         <div class="fs-5 text-center">Для кого задание:</div>
+
+        <input type="hidden" th:field="*{id}" id="taskId">
 
         <div class="col-md-6">
             <div class="form-floating">
                 <select class="form-select col-md-6" aria-label="Default select example" id="disciplinesBlock"
                         aria-describedby="disciplinesHelpBlock" required disabled>
-                    <option selected disabled value="">Выберите...</option>
+                    <option th:text="${task.groups.get(0).faculty.name}" selected disabled value="">Выберите...</option>
                     <option value="1">Мехмат</option>
                     <option value="2">Книт</option>
                     <option value="3">Иняз</option>
@@ -32,7 +34,7 @@
 
         <div class="col-md-6">
             <div class="form-floating mb-3">
-                <input type="number" class="form-control" id="groupNumberInput" aria-describedby="groupNumberHelp"
+                <input th:value="${task.groups.get(0).number}" type="number" class="form-control" id="groupNumberInput" aria-describedby="groupNumberHelp"
                        placeholder="Group number" min="100" max="600" required disabled>
                 <label for="groupNumberInput" class="form-label">Номер группы</label>
                 <div class="invalid-feedback">
@@ -48,7 +50,7 @@
             <div class="form-floating">
                 <select class="form-select col-md-6" id="disciplineSelectInput" aria-label="Default select example"
                         aria-describedby="disciplinesHelpBlock" required disabled>
-                    <option selected disabled value="">Выберите дисциплину...</option>
+                    <option th:text="${task.discipline.name}" selected disabled value="">Выберите дисциплину...</option>
                     <option value="1">Математический анализ</option>
                     <option value="2">Культура речи</option>
                     <option value="3">Физическая культура</option>
@@ -62,7 +64,7 @@
 
         <div class="col-md-12">
             <div class="form-floating">
-                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
+                <textarea th:field="*{description}" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
                           aria-describedby="floatingTextareaHelp" style="height: 150px" maxlength="1000" required></textarea>
                 <label for="floatingTextarea2">Текст задания</label>
                 <div class="invalid-feedback">
@@ -77,7 +79,7 @@
         <div class="col-md-3">
             <div class="form-group">
                 <label class="mb-1" for="inputDate">Введите дату и время:</label>
-                <input type="datetime-local" id="inputDate" class="form-control"
+                <input th:value="${task.deadlineDateTime}" th:name="deadlineDateTime" th:id="deadlineDateTime" type="datetime-local" id="inputDate" class="form-control"
                        aria-describedby="inputDateHelp" required>
                 <div class="invalid-feedback">
                     Это обязательное поле.

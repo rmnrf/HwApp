@@ -1,19 +1,14 @@
 package com.netcracker.hwapp.service;
 
+import com.netcracker.hwapp.dto.TaskCreateDto;
+import com.netcracker.hwapp.dto.TaskUpdateDto;
+import com.netcracker.hwapp.dto.UserUpdateDto;
+import com.netcracker.hwapp.exception.TaskAlreadyExistsException;
 import com.netcracker.hwapp.model.Task;
-import com.netcracker.hwapp.repository.TaskRepo;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.security.Principal;
 
-@Service
-public class TaskService {
-
-    @Autowired
-    TaskRepo taskRepo;
-
-    public List<Task> getTasksByUserId(Long id) {
-        return taskRepo.findAllByTeacherId(id);
-    }
+public interface TaskService {
+    Task create(TaskCreateDto dto, Principal principal) throws TaskAlreadyExistsException;
+    void update(TaskUpdateDto dto, Principal principal);
 }

@@ -2,9 +2,13 @@ package com.netcracker.hwapp.model;
 
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 
 @Entity(name = "tasks")
@@ -14,13 +18,16 @@ import java.util.Set;
 public class Task {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @CreationTimestamp
-    private LocalDate creationDate;
+    private LocalDateTime createDateTime;
 
-    private LocalDate deadlineDate;
+    @UpdateTimestamp
+    private LocalDateTime updateDateTime;
+
+    private LocalDateTime deadlineDateTime;
 
     @ManyToOne
     @JoinColumn(name = "disciplines_id")
@@ -34,6 +41,6 @@ public class Task {
     @JoinColumn(name = "teachers_id")
     private Teacher teacher;
 
-    @OneToMany
-    private Set<Group> groups;
+    @ManyToMany
+    private List<Group> groups;
 }
