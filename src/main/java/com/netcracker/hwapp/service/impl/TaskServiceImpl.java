@@ -16,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -48,7 +50,13 @@ public class TaskServiceImpl implements TaskService {
         }
 
         task.setDescription(dto.getDescription());
-        task.setDeadlineDateTime(dto.getDeadlineDateTime());
+
+        if (dto.getDeadlineDateTime().isBefore(LocalDateTime.now())) {
+            throw new RuntimeException("Дедлайн не должен быть раньше текущей даты.");
+        } else {
+            task.setDeadlineDateTime(dto.getDeadlineDateTime());
+        }
+
         task.setTeacher(teacherRepo.findByEmail(principal.getName()));
         return taskRepo.save(task);
     }
@@ -57,7 +65,23 @@ public class TaskServiceImpl implements TaskService {
     public void update(TaskUpdateDto dto, Principal principal) {
         Task task = taskRepo.findById(dto.getId()).get();
         task.setDescription(dto.getDescription());
-        task.setDeadlineDateTime(dto.getDeadlineDateTime());
+
+        if (dto.getDeadlineDateTime().isBefore(LocalDateTime.now())) {
+            throw new RuntimeException("Дедлайн не должен быть раньше текущей даты.");
+        } else {
+            task.setDeadlineDateTime(dto.getDeadlineDateTime());
+        }
+
         taskRepo.save(task);
+    }
+
+    @Override
+    public void delete(Long id, Principal principal) {
+        Task task = taskRepo.findById(id).get();
+        if (taskRepo.findAllByTeacherEmail(principal.getName()).contains(task)) {
+            taskRepo.delete(task);
+        } else {
+            throw new RuntimeException("Вы не можете удалить это задание.");
+        }
     }
 }

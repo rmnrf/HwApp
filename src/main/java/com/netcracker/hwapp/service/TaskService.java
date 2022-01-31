@@ -11,4 +11,5 @@ import java.security.Principal;
 public interface TaskService {
     Task create(TaskCreateDto dto, Principal principal) throws TaskAlreadyExistsException;
     void update(TaskUpdateDto dto, Principal principal);
+    void delete(Long id, Principal principal);
 }

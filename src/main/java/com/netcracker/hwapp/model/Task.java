@@ -6,6 +6,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -33,6 +34,7 @@ public class Task {
     @JoinColumn(name = "disciplines_id")
     private Discipline discipline;
 
+    @Size(min = 1, max = 1000)
     private String description;
 
     //private Boolean expired = false;

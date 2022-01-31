@@ -2,6 +2,7 @@ package com.netcracker.hwapp.controller;
 
 import com.netcracker.hwapp.dto.TaskCreateDto;
 import com.netcracker.hwapp.dto.TaskUpdateDto;
+import com.netcracker.hwapp.dto.TeacherRegistrationDto;
 import com.netcracker.hwapp.exception.TaskNotFoundException;
 import com.netcracker.hwapp.model.Discipline;
 import com.netcracker.hwapp.model.Task;
@@ -14,6 +15,7 @@ import com.netcracker.hwapp.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -40,6 +42,11 @@ public class TaskController {
     @Autowired
     private TaskRepo taskRepo;
 
+    @ModelAttribute("new_task")
+    public TaskCreateDto taskCreateDto() {
+        return new TaskCreateDto();
+    }
+
     @GetMapping
     public String showTasksPage(Model model, Principal principal) throws TaskNotFoundException {
         List<Task> tasks = null;
@@ -63,7 +70,7 @@ public class TaskController {
 
     @PostMapping("/new")
     public String createNewTask(
-            @ModelAttribute("task")
+            @ModelAttribute("new_task")
             @Valid TaskCreateDto taskCreateDto,
             Principal principal) {
         try {
@@ -98,7 +105,17 @@ public class TaskController {
             Principal principal) {
         try {
             taskService.update(taskUpdateDto, principal);
-            return "redirect:/tasks?success";
+            return "redirect:/tasks?updated";
+        } catch (Exception e) {
+            return "redirect:/tasks?error";
+        }
+    }
+
+    @GetMapping("/delete/{id}")
+    public String deleteTask(@PathVariable Long id, Principal principal) {
+        try {
+            taskService.delete(id, principal);
+            return "redirect:/tasks?deleted";
         } catch (Exception e) {
             return "redirect:/tasks?error";
         }

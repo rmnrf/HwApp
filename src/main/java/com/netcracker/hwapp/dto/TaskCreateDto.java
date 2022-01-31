@@ -7,6 +7,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 @Data
@@ -20,6 +21,7 @@ public class TaskCreateDto {
 
     private Long disciplineId;
 
+    @Size(min = 1, max = 1000, message = "Длина текста должна находиться в диапазоне от 1 до 1000 символов")
     @NotBlank(message = "Необходимо указать текст задания")
     private String description;
 

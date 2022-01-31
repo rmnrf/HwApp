@@ -15,7 +15,7 @@
         <div class="fs-5 text-center">Для кого задание:</div>
 
         <div class="col-md-6">
-            <label for="disciplinesBlock" class="form-label">Факультет</label>
+            <label for="disciplinesBlock" class="form-label">Факультет:</label>
             <select class="form-select col-md-6" aria-label="Default select example" id="disciplinesBlock"
                     disabled>
                     <option th:text="${task.groups.get(0).faculty.name}" selected disabled value="">Выберите...</option>
@@ -26,7 +26,7 @@
         </div>
 
         <div class="col-md-6">
-                <label for="groupNumberInput" class="form-label">Номер группы</label>
+                <label for="groupNumberInput" class="form-label">Номер группы:</label>
                 <input th:value="${task.groups.get(0).number}" type="number" class="form-control" id="groupNumberInput" aria-describedby="groupNumberHelp"
                        value="111" min="100" max="600" readonly>
         </div>
@@ -34,7 +34,7 @@
         <div class="fs-5 text-center py-2">Детали задания:</div>
 
         <div class="col-md-12">
-            <label for="disciplineSelectInput" class="form-label">Дисциплина</label>
+            <label for="disciplineSelectInput" class="form-label">Дисциплина:</label>
             <select class="form-select col-md-6" id="disciplineSelectInput" aria-label="Default select example"
                     disabled>
                     <option th:text="${task.discipline.name}" selected disabled value="">Выберите дисциплину...</option>
@@ -45,7 +45,7 @@
         </div>
 
         <div class="col-md-12">
-                <label for="floatingTextarea2" class="form-label">Текст задания</label>
+                <label for="floatingTextarea2" class="form-label">Текст задания:</label>
                 <textarea th:text="${task.description}" class="form-control" placeholder="Здесь должен быть текст задания..." id="floatingTextarea2"
                           style="height: 150px" maxlength="1000" readonly></textarea>
         </div>

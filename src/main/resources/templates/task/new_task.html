@@ -11,7 +11,7 @@
 <div layout:fragment="content" class="container my-4">
     <h1 class="h3 text-center my-4">Добавление нового задания</h1>
 
-    <form th:action="@{/tasks/new}" method="post" th:object="${task}" class="row g-3" novalidate>
+    <form th:action="@{/tasks/new}" method="post" th:object="${new_task}" class="row g-3" novalidate>
         <div class="fs-5 text-center">Для кого задание:</div>
 
         <div class="col-md-6">
