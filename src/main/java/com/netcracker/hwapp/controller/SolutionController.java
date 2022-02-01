@@ -5,10 +5,9 @@ import com.netcracker.hwapp.enums.Grade;
 import com.netcracker.hwapp.exception.SolutionNotFoundException;
 import com.netcracker.hwapp.exception.TaskNotFoundException;
 import com.netcracker.hwapp.exception.UserNotFoundException;
-import com.netcracker.hwapp.model.Solution;
-import com.netcracker.hwapp.model.Student;
-import com.netcracker.hwapp.model.Task;
-import com.netcracker.hwapp.model.User;
+import com.netcracker.hwapp.model.*;
+import com.netcracker.hwapp.model.File;
+import com.netcracker.hwapp.repository.FileRepo;
 import com.netcracker.hwapp.repository.SolutionRepo;
 import com.netcracker.hwapp.repository.TaskRepo;
 import com.netcracker.hwapp.repository.UserRepo;
@@ -18,14 +17,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.*;
+import java.net.URLConnection;
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/solutions")
 public class SolutionController {
+
+    @Autowired
+    private FileRepo fileRepo;
 
     @Autowired
     private UserRepo userRepo;
@@ -83,9 +90,10 @@ public class SolutionController {
     public String createNewSolution(
             @ModelAttribute("new_solution")
             @Valid SolutionCreateDto solutionCreateDto,
+            @RequestParam("myFile") MultipartFile myFile,
             Principal principal) {
         try {
-            solutionService.create(solutionCreateDto, principal);
+            solutionService.create(solutionCreateDto, principal, myFile);
             return "redirect:/solutions?success";
         } catch (Exception e) {
             return "redirect:/solutions?error";
@@ -154,4 +162,23 @@ public class SolutionController {
             return "redirect:/solutions?error";
         }
     }
+
+    @GetMapping("{id}/files/{fileName}")
+    public void getFile(@PathVariable("id") Long id,
+                        @PathVariable("fileName") String fileName,
+                        HttpServletResponse response) throws Exception {
+        Optional<File> file = fileRepo.findByName(fileName);
+        if (file.isPresent()) {
+            byte[] bytes = file.get().getData();
+            InputStream is = new BufferedInputStream(new ByteArrayInputStream(bytes));
+            String mimeType = URLConnection.guessContentTypeFromStream(is);
+            response.setContentType(mimeType);
+            OutputStream outputStream = response.getOutputStream();
+            outputStream.write(bytes);
+            outputStream.flush();
+            outputStream.close();
+        }
+    }
+
+
 }

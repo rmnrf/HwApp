@@ -11,7 +11,7 @@
 <div layout:fragment="content" class="container my-4">
     <h1 class="h3 text-center my-4">Отправка решения</h1>
 
-    <form th:action="@{/solutions/new}" method="post" th:object="${new_solution}" class="row g-3" novalidate>
+    <form th:action="@{/solutions/new}" method="post" th:object="${new_solution}" enctype="multipart/form-data" class="row g-3" novalidate>
         <div class="fs-5 text-center">Выберите задание:</div>
 
         <div class="col-md-12">
@@ -34,12 +34,12 @@
 
         <div class="col-md-12">
             <label for="formFile" class="form-label">Файл с решением:</label>
-            <input class="form-control" type="file" id="formFile" aria-describedby="fileUploadHelp" required>
+            <input  class="form-control" name="myFile" type="file" id="formFile" aria-describedby="fileUploadHelp" required>
             <div class="invalid-feedback">
                 Это обязательное поле.
             </div>
             <div id="fileUploadHelp" class="form-text">
-                Прикрепите файл с решением задания.
+                Прикрепите файл с решением задания. Максимальный размер 20МБ.
             </div>
         </div>
 

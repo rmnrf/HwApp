@@ -3,6 +3,8 @@ package com.netcracker.hwapp.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 
@@ -16,8 +18,10 @@ public class File {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String link;
+    private String name;
 
-    @OneToOne
-    private Solution solution;
+    private String type;
+
+    @Lob
+    private byte[] data;
 }
