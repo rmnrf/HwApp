@@ -7,10 +7,7 @@ import com.netcracker.hwapp.exception.TaskAlreadyExistsException;
 import com.netcracker.hwapp.model.Discipline;
 import com.netcracker.hwapp.model.Task;
 import com.netcracker.hwapp.model.User;
-import com.netcracker.hwapp.repository.DisciplineRepo;
-import com.netcracker.hwapp.repository.GroupRepo;
-import com.netcracker.hwapp.repository.TaskRepo;
-import com.netcracker.hwapp.repository.TeacherRepo;
+import com.netcracker.hwapp.repository.*;
 import com.netcracker.hwapp.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,6 +31,9 @@ public class TaskServiceImpl implements TaskService {
 
     @Autowired
     TeacherRepo teacherRepo;
+
+    @Autowired
+    SolutionRepo solutionRepo;
 
     @Override
     public Task create(TaskCreateDto dto, Principal principal) throws TaskAlreadyExistsException {

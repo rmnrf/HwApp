@@ -5,8 +5,12 @@ import com.netcracker.hwapp.enums.Status;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
+import java.time.LocalDateTime;
 
 @Entity(name = "solutions")
 @Table(name = "solutions")
@@ -19,11 +23,20 @@ public class Solution {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @CreationTimestamp
+    private LocalDateTime createDateTime;
+
+    @UpdateTimestamp
+    private LocalDateTime updateDateTime;
+
     @OneToOne
     private Task task;
 
     @OneToOne
     private File file;
+
+    @Size(max = 1000)
+    private String comment;
 
     @Enumerated(EnumType.STRING)
     private Grade grade;

@@ -11,14 +11,16 @@
 <div layout:fragment="content" class="container my-4">
     <h1 class="h3 text-center my-4">Редактирование решения</h1>
 
-    <form class="row g-3 needs-validation" novalidate>
+    <form th:action="@{/solutions/edit}" method="post" th:object="${solution}" class="row g-3" novalidate>
         <div class="fs-5 text-center">Выберите задание:</div>
+
+        <input type="hidden" th:field="*{id}" id="solutionId">
 
         <div class="col-md-12">
             <div class="form-floating">
                 <select class="form-select col-md-6" aria-label="Default select example" id="disciplinesBlock"
                         disabled>
-                    <option selected disabled value="">Выберите...</option>
+                    <option th:text="Номер + ' ' + ${solution.task.getId()} + '. Дисциплина: ' + ${solution.task.discipline.name}" selected disabled value="">Выберите...</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
@@ -42,7 +44,7 @@
 
         <div class="col-md-12">
             <div class="form-floating">
-                <textarea class="form-control" placeholder="Комментарий к решению..." id="floatingTextarea2"
+                <textarea th:field="*{comment}" class="form-control" placeholder="Комментарий к решению..." id="floatingTextarea2"
                           aria-describedby="floatingTextareaHelp" style="height: 100px" maxlength="1000"></textarea>
                 <label for="floatingTextarea2">Комментарий</label>
                 <div id="floatingTextareaHelp" class="form-text">

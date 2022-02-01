@@ -13,7 +13,7 @@
 
     <!-- Сообщение об успешном обновлении профиля -->
     <div th:if="${param.success}">
-        <div class="alert alert-info">Данные профиля успешно изменены.</div>
+        <div class="alert alert-info text-center">Данные профиля успешно изменены.</div>
     </div>
 
     <form th:action="@{/editProfile}" method="post" th:object="${user}" class="row g-3" novalidate

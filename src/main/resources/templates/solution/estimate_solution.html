@@ -11,18 +11,20 @@
 <div layout:fragment="content" class="container my-4">
     <h1 class="h3 text-center my-4">Просмотр решения</h1>
 
-    <form class="row g-3 needs-validation" novalidate>
+    <form th:action="@{/solutions/estimate}" method="post" th:object="${solution}" class="row g-3" novalidate>
         <div class="fs-5 text-center">Задание:</div>
+
+        <input type="hidden" th:field="*{id}" id="solutionId">
 
         <div class="col-md-12">
             <label for="disciplinesBlock" class="form-label">Задание</label>
             <select class="form-select col-md-6" aria-label="Default select example" id="disciplinesBlock2"
-                        disabled>
-                    <option th:text="Номер + ' ' + ${solution.task.getId()} + '. Дисциплина: ' + ${solution.task.discipline.name}">Выберите...</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                </select>
+                    disabled>
+                <option th:text="Номер + ' ' + ${solution.task.getId()} + '. Дисциплина: ' + ${solution.task.discipline.name}">Выберите...</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+            </select>
         </div>
 
         <div class="col-md-4">
@@ -86,6 +88,21 @@
             </div>
         </div>
 
+        <div class="fs-5 text-center">Оценивание:</div>
+
+        <div class="col-md-12">
+            <div class="form-floating">
+                <select th:field="*{grade}" class="form-select col-md-6" aria-label="Default select example" id="gradeBlock">
+                    <option selected disabled value="">Выберите...</option>
+                    <option th:each="gradee : ${T(com.netcracker.hwapp.enums.Grade).values()}"
+                            th:value="${gradee}" th:text="${gradee.displayValue}"></option>
+                </select>
+                <label for="disciplinesBlock" class="form-label">Оценка</label>
+            </div>
+        </div>
+
+
+
         <!--        <div class="col-md-12">-->
         <!--            <label for="exampleInputEmail1" class="form-label">Преподаваемые дисциплины</label>-->
         <!--            <select multiple size="5" class="form-select col-md-6" aria-label="Default select example"-->
@@ -103,9 +120,9 @@
         <!--        </div>-->
 
         <div class="col-md-12">
-<!--            <a th:href="@{/solutions/edit/{id}(id=${solution.id})}" class="shadow btn btn-primary">Поставить оценку</a>-->
             <a th:href="@{/solutions}" class="shadow btn btn-primary">К списку решений</a>
         </div>
+        <button type="submit" class="shadow btn btn-primary">Поставить оценку</button>
     </form>
 
     <script>

@@ -10,8 +10,33 @@
 <div layout:fragment="content" class="container my-2">
     <h2 class="text-center">Решения</h2>
 
-        <a class="btn btn-primary btn-sm mb-3">Добавить</a>
-    <table class="table table-striped table-hover table-bordered table-responsive">
+    <!-- Сообщение об успешной отправке решения -->
+    <div th:if="${param.success}">
+        <div class="alert alert-info text-center">Решение было успешно отправлено.</div>
+    </div>
+
+    <!-- Сообщение об успешном оценивании -->
+    <div th:if="${param.estimated}">
+        <div class="alert alert-info text-center">Решение было успешно оценено.</div>
+    </div>
+
+    <!-- Сообщение об ошибке -->
+    <div th:if="${param.error}">
+        <div class="alert alert-danger text-center">Произошла ошибка.</div>
+    </div>
+
+    <!-- Сообщение об успешном удалении -->
+    <div th:if="${param.deleted}">
+        <div class="alert alert-warning text-center">Решение было успешно удалено.</div>
+    </div>
+
+    <!-- Сообщение об успешном изменении -->
+    <div th:if="${param.updated}">
+        <div class="alert alert-info text-center">Решение было успешно изменено.</div>
+    </div>
+
+    <a th:href="@{/solutions/new}" class="btn btn-primary shadow mb-3">Отправить решение</a>
+    <table class="table table-striped table-hover table-bordered table-responsive align-middle">
         <thead>
         <tr>
             <th scope="col">Задание</th>
@@ -25,48 +50,71 @@
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <th scope="row">73</th>
-            <td>Иванов Иван Иванович</td>
-            <td>Биологический</td>
-            <td>322</td>
-            <td>28.01.2022</td>
-            <td></td>
-            <td>Отправлено</td>
+
+        <tr th:each="solution : ${solutions}">
+            <td><a th:href="@{/tasks/{id}(id=${solution.task.id})}" th:text="${solution.task.id}"></a></td>
+            <td th:text="${solution.student.lastName + ' ' + solution.student.firstName + ' ' + solution.student.middleName}"></td>
+            <td th:text="${solution.student.group.faculty.name}"></td>
+            <td th:text="${solution.student.group.number}"></td>
+            <td th:text="${#temporals.format(solution.updateDateTime, 'yyyy-MM-dd HH:mm')}"></td>
+            <td><span th:text="${solution.grade.displayValue}" class="badge rounded-pill bg-warning text-dark"></span></td>
+            <td th:text="${solution.status.displayValue}"></td>
             <td>
-                <a class="btn btn-primary btn-sm">Открыть</a>
-                <!--                <a class="btn btn-primary">Изменить</a>-->
-                <!--                <a class="btn btn-danger">Удалить</a>-->
+                <a th:href="@{/solutions/estimate/{id}(id=${solution.id})}" class="btn btn-primary btn-sm">Оценить</a>
+                <a th:href="@{/solutions/{id}(id=${solution.id})}" class="btn btn-primary btn-sm">Просмотр</a>
+                <a th:if="${solution.grade.equals(T(com.netcracker.hwapp.enums.Grade).NONE)}" th:href="@{/solutions/edit/{id}(id=${solution.id})}" class="btn btn-secondary btn-sm">Изменить</a>
+                <a th:if="${solution.grade.equals(T(com.netcracker.hwapp.enums.Grade).NONE)}" th:href="@{/solutions/delete/{id}(id=${solution.id})}" class="btn btn-danger btn-sm">Удалить</a>
             </td>
         </tr>
-        <tr>
-            <th scope="row">13</th>
-            <td>Богданов Сергей Викторович</td>
-            <td>Физический</td>
-            <td>222</td>
-            <td>24.01.2022</td>
-            <td>Отлично</td>
-            <td>Оценено</td>
-            <td>
-                <a class="btn btn-primary btn-sm">Открыть</a>
-                <!--                <a class="btn btn-primary">Изменить</a>-->
-                <!--                <a class="btn btn-danger">Удалить</a>-->
-            </td>
-        </tr>
-        <tr>
-            <th scope="row">33</th>
-            <td>Кириллов Кирилл Витальевич</td>
-            <td>Математический</td>
-            <td>141</td>
-            <td>29.01.2022</td>
-            <td>Зачет</td>
-            <td>Оценено</td>
-            <td>
-                <a class="btn btn-primary btn-sm">Открыть</a>
-                <!--                <a class="btn btn-primary">Изменить</a>-->
-                <!--                <a class="btn btn-danger">Удалить</a>-->
-            </td>
-        </tr>
+
+
+
+
+
+<!--        <tr>-->
+<!--            <th scope="row">73</th>-->
+<!--            <td>Иванов Иван Иванович</td>-->
+<!--            <td>Биологический</td>-->
+<!--            <td>322</td>-->
+<!--            <td>28.01.2022</td>-->
+<!--            <td></td>-->
+<!--            <td>Отправлено</td>-->
+<!--            <td>-->
+<!--                <a class="btn btn-primary btn-sm">Открыть</a>-->
+<!--                &lt;!&ndash;                <a class="btn btn-primary">Изменить</a>&ndash;&gt;-->
+<!--                &lt;!&ndash;                <a class="btn btn-danger">Удалить</a>&ndash;&gt;-->
+<!--            </td>-->
+<!--        </tr>-->
+<!--        <tr>-->
+<!--            <th scope="row">13</th>-->
+<!--            <td>Богданов Сергей Викторович</td>-->
+<!--            <td>Физический</td>-->
+<!--            <td>222</td>-->
+<!--            <td>24.01.2022</td>-->
+<!--            <td>Отлично</td>-->
+<!--            <td>Оценено</td>-->
+<!--            <td>-->
+<!--                <a class="btn btn-primary btn-sm">Открыть</a>-->
+<!--                &lt;!&ndash;                <a class="btn btn-primary">Изменить</a>&ndash;&gt;-->
+<!--                &lt;!&ndash;                <a class="btn btn-danger">Удалить</a>&ndash;&gt;-->
+<!--            </td>-->
+<!--        </tr>-->
+<!--        <tr>-->
+<!--            <th scope="row">33</th>-->
+<!--            <td>Кириллов Кирилл Витальевич</td>-->
+<!--            <td>Математический</td>-->
+<!--            <td>141</td>-->
+<!--            <td>29.01.2022</td>-->
+<!--            <td>Зачет</td>-->
+<!--            <td>Оценено</td>-->
+<!--            <td>-->
+<!--                <a class="btn btn-primary btn-sm">Открыть</a>-->
+<!--                &lt;!&ndash;                <a class="btn btn-primary">Изменить</a>&ndash;&gt;-->
+<!--                &lt;!&ndash;                <a class="btn btn-danger">Удалить</a>&ndash;&gt;-->
+<!--            </td>-->
+<!--        </tr>-->
+
+
         </tbody>
     </table>
 

@@ -20,12 +20,12 @@
         <div class="alert alert-danger text-center">Произошла ошибка.</div>
     </div>
 
-    <!-- Сообщение об ошибке -->
+    <!-- Сообщение об успешном удалении -->
     <div th:if="${param.deleted}">
         <div class="alert alert-warning text-center">Задание было успешно удалено.</div>
     </div>
 
-    <!-- Сообщение об ошибке -->
+    <!-- Сообщение об успешном изменении -->
     <div th:if="${param.updated}">
         <div class="alert alert-info text-center">Задание было успешно изменено.</div>
     </div>

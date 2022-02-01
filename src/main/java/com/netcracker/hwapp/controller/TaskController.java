@@ -7,9 +7,8 @@ import com.netcracker.hwapp.exception.TaskNotFoundException;
 import com.netcracker.hwapp.model.Discipline;
 import com.netcracker.hwapp.model.Task;
 import com.netcracker.hwapp.model.Teacher;
-import com.netcracker.hwapp.repository.DisciplineRepo;
-import com.netcracker.hwapp.repository.TaskRepo;
-import com.netcracker.hwapp.repository.TeacherRepo;
+import com.netcracker.hwapp.model.User;
+import com.netcracker.hwapp.repository.*;
 import com.netcracker.hwapp.service.FacultyService;
 import com.netcracker.hwapp.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,10 +27,13 @@ import java.util.List;
 public class TaskController {
 
     @Autowired
-    private FacultyService facultyService;
+    private UserRepo userRepo;
 
     @Autowired
-    private DisciplineRepo disciplineRepo;
+    private StudentRepo studentRepo;
+
+    @Autowired
+    private FacultyService facultyService;
 
     @Autowired
     private TaskService taskService;
@@ -49,11 +51,17 @@ public class TaskController {
 
     @GetMapping
     public String showTasksPage(Model model, Principal principal) throws TaskNotFoundException {
+        User user = userRepo.findByEmail(principal.getName());
         List<Task> tasks = null;
-        if (principal != null) {
-            tasks = taskRepo.findAllByTeacherEmail(principal.getName());
-        } else {
-            throw new TaskNotFoundException("Задания не найдены.");
+        switch (user.getUserType()) {
+            case "Студент":
+                tasks = taskRepo.findAllByGroups_Id(studentRepo.findById(user.getId()).get().getGroup().getId());
+                break;
+            case "Преподаватель":
+                tasks = taskRepo.findAllByTeacherEmail(principal.getName());
+                break;
+            default:
+                throw new TaskNotFoundException("Задания не найдены.");
         }
         model.addAttribute("tasks", tasks);
         return "/list/tasks_list";
