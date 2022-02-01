@@ -35,7 +35,8 @@ public class Solution {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Task task;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REFRESH)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private File file;
 
     @Size(max = 1000)

@@ -54,12 +54,13 @@
 
         <div class="col-md-6">
             <label for="formFile" class="form-label">Файл с решением:</label>
-            <input class="form-control" type="file" id="formFile" readonly>
+            <input th:value="${solution.file.name}" class="form-control" type="text" id="formFile" readonly>
         </div>
 
         <div class="col-md-6">
             <label for="formFile" class="form-label">Загруженный файл:</label>
-            <a class="form-control btn btn-primary" th:href="@{'#'}">
+            <a class="form-control btn btn-primary" download
+               th:href="@{/solutions/{id}/files/{fileName}(id=${solution.id}, fileName=${solution.file.name})}">
                 Скачать файл
             </a>
         </div>
