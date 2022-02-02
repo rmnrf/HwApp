@@ -24,12 +24,12 @@
 <body>
 
 <!-- Main Navigation -->
-<div sec:authorize="isAuthenticated()">
-    <div th:insert="~{/fragments/header :: user-header}"></div>
+<div sec:authorize="!isAuthenticated()">
+    <div th:insert="~{fragments/header :: guest-header}"></div>
 </div>
 
-<div sec:authorize="!isAuthenticated()">
-    <div th:insert="~{/fragments/header :: guest-header}"></div>
+<div sec:authorize="isAuthenticated()">
+    <div th:insert="~{fragments/header :: user-header}"></div>
 </div>
 
 <!-- Content Section -->
@@ -38,7 +38,7 @@
 </section>
 
 <!-- Footer -->
-<!--<div th:insert="~{/fragments/footer :: footer}"></div>-->
+<!--<div th:insert="~{fragments/footer :: footer}"></div>-->
 
 <!-- Optional Section -->
 <th:block layout:fragment="optional" />
