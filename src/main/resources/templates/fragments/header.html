@@ -15,16 +15,14 @@
             </a>
 
             <div class="col-md-3 text-end mx-1">
-                <!--            <button type="button" class="btn btn-outline-primary me-2"><i class="bi bi-person"></i>Войти</button>-->
-                <!--            <button type="button" class="btn btn-primary">Зарегистрироваться</button>-->
                 <a class="shadow-sm btn btn-outline-primary me-2" th:href="@{'/login'}"><i class="bi bi-person"></i>Войти</a>
                 <a class="shadow-sm btn btn-primary" th:href="@{'/registration'}">Зарегистрироваться</a>
             </div>
         </header>
     </div>
 
-<!--User Header-->
-<div th:fragment="user-header" class="container">
+    <!--User Header-->
+    <div th:fragment="user-header" class="container">
     <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
         <a href="/" class="d-flex align-items-center col-md-2 mb-2 mb-md-0 text-dark text-decoration-none">
             <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" class="bi bi-mortarboard mx-1 my-2"
@@ -44,7 +42,6 @@
             </ul>
 
             <div class="col-md-3 text-end">
-                <!-- Example single danger button -->
                 <div class="btn-group">
                     <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="bi bi-person"></i> <span sec:authentication="name">Пользователь</span>
@@ -56,11 +53,8 @@
                         <form th:action="@{/logout}" action="/" method="post">
                             <button class="dropdown-item" type="submit">Выйти</button>
                         </form>
-    <!--                    <li><a class="dropdown-item" href="#"><i class="bi bi-x-square-fill"></i> Выйти</a></li>-->
                     </ul>
                 </div>
-    <!--            <button type="button" class="btn btn-outline-primary me-2"><i class="bi bi-person"></i>Профиль</button>-->
-    <!--            <button type="button" class="btn btn-outline-danger">Выйти</button>-->
             </div>
     </header>
 </div>

@@ -73,7 +73,7 @@ public class RegistrationController {
             userService.create(studentRegistrationDto);
             return "redirect:/login?success";
         } catch (Exception e) {
-            return "redirect:/?error";
+            return "redirect:/login?error";
         }
     }
 
@@ -85,7 +85,7 @@ public class RegistrationController {
             userService.create(teacherRegistrationDto);
             return "redirect:/login?success";
         } catch (Exception e) {
-            return "redirect:/?error";
+            return "redirect:/login?error";
         }
     }
 }

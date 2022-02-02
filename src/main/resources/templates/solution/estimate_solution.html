@@ -11,7 +11,7 @@
 <div layout:fragment="content" class="container my-4">
     <h1 class="h3 text-center my-4">Просмотр решения</h1>
 
-    <form th:action="@{/solutions/estimate}" method="post" th:object="${solution}" class="row g-3" novalidate>
+    <form th:action="@{/solutions/estimate}" method="post" th:object="${solution}" class="row g-3 needs-validation" novalidate>
         <div class="fs-5 text-center">Задание:</div>
 
         <input type="hidden" th:field="*{id}" id="solutionId">
@@ -101,24 +101,6 @@
                 <label for="disciplinesBlock" class="form-label">Оценка</label>
             </div>
         </div>
-
-
-
-        <!--        <div class="col-md-12">-->
-        <!--            <label for="exampleInputEmail1" class="form-label">Преподаваемые дисциплины</label>-->
-        <!--            <select multiple size="5" class="form-select col-md-6" aria-label="Default select example"-->
-        <!--                    aria-describedby="disciplinesHelpBlock" required>-->
-        <!--                <option value="1">Математика</option>-->
-        <!--                <option value="2">Русский</option>-->
-        <!--                <option value="3">Английский</option>-->
-        <!--            </select>-->
-        <!--            <div class="invalid-feedback">-->
-        <!--                Вы должны выбрать как минимум одну дисциплину.-->
-        <!--            </div>-->
-        <!--            <div id="disciplinesHelpBlock" class="form-text">-->
-        <!--                Удерживайте клавишу Ctrl чтобы выбрать несколько дисциплин.-->
-        <!--            </div>-->
-        <!--        </div>-->
 
         <div class="col-md-12">
             <a th:href="@{/solutions}" class="shadow btn btn-outline-primary">К списку решений</a>

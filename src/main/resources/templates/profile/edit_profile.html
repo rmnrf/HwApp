@@ -16,7 +16,12 @@
         <div class="alert alert-info text-center">Данные профиля успешно изменены.</div>
     </div>
 
-    <form th:action="@{/editProfile}" method="post" th:object="${user}" class="row g-3" novalidate
+    <!-- Сообщение об ошибке обновления данных -->
+    <div th:if="${param.error}">
+        <div class="alert alert-danger text-center">Произошла ошибка.</div>
+    </div>
+
+    <form th:action="@{/editProfile}" method="post" th:object="${user}" class="row g-3 needs-validation" novalidate
           oninput='up2.setCustomValidity(up2.value != up.value ? "Пароли не совпадают." : "")'>
         <div class="col-md-6">
             <div class="form-floating mb-3">
@@ -73,51 +78,6 @@
                 </div>
             </div>
         </div>
-
-<!--        <div class="col-md-6">-->
-<!--            <div class="form-floating">-->
-<!--                <select class="form-select col-md-6" aria-label="Default select example"-->
-<!--                        aria-describedby="disciplinesHelpBlock" required>-->
-<!--                    <option selected disabled value="">Выберите...</option>-->
-<!--                    <option value="1">Мехмат</option>-->
-<!--                    <option value="2">Книт</option>-->
-<!--                    <option value="3">Иняз</option>-->
-<!--                </select>-->
-<!--                <label for="exampleInputEmail1" class="form-label">Факультет</label>-->
-<!--                <div class="invalid-feedback">-->
-<!--                    Это обязательное поле.-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-
-<!--        <div class="col-md-6">-->
-<!--            <div class="form-floating mb-3">-->
-<!--                <input type="number" class="form-control" id="groupNumberInput" aria-describedby="groupNumberHelp"-->
-<!--                       placeholder="Group number" min="100" max="600" required>-->
-<!--                <label for="groupNumberInput" class="form-label">Номер группы</label>-->
-<!--                <div class="invalid-feedback">-->
-<!--                    Это обязательное поле.-->
-<!--                </div>-->
-<!--                <div id="groupNumberHelp" class="form-text">Укажите номер группы. <i>Например: 121</i></div>-->
-<!--            </div>-->
-<!--        </div>-->
-
-        <!--        <div class="col-md-12">-->
-        <!--            <label for="exampleInputEmail1" class="form-label">Преподаваемые дисциплины</label>-->
-        <!--            <select multiple size="5" class="form-select col-md-6" aria-label="Default select example"-->
-        <!--                    aria-describedby="disciplinesHelpBlock" required>-->
-        <!--                <option value="1">Математика</option>-->
-        <!--                <option value="2">Русский</option>-->
-        <!--                <option value="3">Английский</option>-->
-        <!--            </select>-->
-        <!--            <div class="invalid-feedback">-->
-        <!--                Вы должны выбрать как минимум одну дисциплину.-->
-        <!--            </div>-->
-        <!--            <div id="disciplinesHelpBlock" class="form-text">-->
-        <!--                Удерживайте клавишу Ctrl чтобы выбрать несколько дисциплин.-->
-        <!--            </div>-->
-        <!--        </div>-->
-
 
         <button type="submit" class="shadow btn btn-primary">Изменить профиль</button>
     </form>

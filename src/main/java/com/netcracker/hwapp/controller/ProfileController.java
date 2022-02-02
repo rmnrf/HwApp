@@ -38,7 +38,7 @@ public class ProfileController {
             userService.update(dto, principal);
             return "redirect:/editProfile?success";
         } catch (Exception e) {
-            return "redirect:/?error";
+            return "redirect:/editProfile?error";
         }
     }
 }

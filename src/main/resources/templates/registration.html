@@ -12,7 +12,7 @@
     <h3 class="text-center my-4">Регистрация пользователя</h3>
     <br>
 
-    <form th:case="'student'" th:action="@{/registration/student}" method="post" th:object="${student}" class="row g-3" novalidate
+    <form th:case="'student'" th:action="@{/registration/student}" method="post" th:object="${student}" class="row g-3 needs-validation" novalidate
               oninput='up2.setCustomValidity(up2.value !== up.value ? "Пароли не совпадают." : "")'>
             <div class="col-md-12">
                 <div class="form-floating mb-3">
@@ -99,9 +99,6 @@
                         <option th:each="faculty : ${faculties}"
                                 th:value="${faculty.getId()}"
                                 th:text="${faculty.getName()}"></option>
-                        <!--                    <option value="1">Мехмат</option>-->
-                        <!--                    <option value="2">Книт</option>-->
-                        <!--                    <option value="3">Иняз</option>-->
                     </select>
                     <label for="exampleInputEmail1" class="form-label">Факультет</label>
                     <div class="invalid-feedback">
@@ -221,9 +218,6 @@
                 <option th:each="discipline : ${disciplines}"
                         th:value="${discipline.getId()}"
                         th:text="${discipline.getName()}"></option>
-                <!--                <option value="1">Математика</option>-->
-                <!--                <option value="2">Русский</option>-->
-                <!--                <option value="3">Английский</option>-->
             </select>
             <div class="invalid-feedback">
                 Вы должны выбрать как минимум одну дисциплину.
