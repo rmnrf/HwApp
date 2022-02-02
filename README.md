@@ -3,6 +3,7 @@
 Demo: https://springboot-hwapp.herokuapp.com  
 
 Spring (Boot, Data, Security)  
+PostgreSQL  
 Thymeleaf  
 Bootstrap  
 
