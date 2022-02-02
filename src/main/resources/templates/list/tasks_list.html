@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
 <head>
@@ -31,7 +31,7 @@
     </div>
 
 <!--    <a class="btn btn-primary btn-sm mb-3">Добавить</a>-->
-    <a th:href="@{/tasks/new}" class="btn btn-primary btn shadow mb-3">Добавить задание</a>
+    <a sec:authorize="hasAuthority('teacher:perms')" th:href="@{/tasks/new}" class="btn btn-primary btn shadow mb-3">Добавить задание</a>
     <table class="table table-striped table-hover table-bordered table-responsive align-middle">
         <thead>
         <tr>
@@ -51,8 +51,8 @@
             <td th:text="${#temporals.format(task.createDateTime, 'yyyy-MM-dd HH:mm')}"></td>
             <td>
                 <a th:href="@{/tasks/{id}(id=${task.id})}" class="btn btn-primary btn-sm">Просмотр</a>
-                <a th:href="@{/tasks/edit/{id}(id=${task.id})}" class="btn btn-secondary btn-sm">Изменить</a>
-                <a th:href="@{/tasks/delete/{id}(id=${task.id})}" class="btn btn-danger btn-sm">Удалить</a>
+                <a sec:authorize="hasAuthority('teacher:perms')" th:href="@{/tasks/edit/{id}(id=${task.id})}" class="btn btn-secondary btn-sm">Изменить</a>
+                <a sec:authorize="hasAuthority('teacher:perms')" th:href="@{/tasks/delete/{id}(id=${task.id})}" class="btn btn-danger btn-sm">Удалить</a>
             </td>
         </tr>
 

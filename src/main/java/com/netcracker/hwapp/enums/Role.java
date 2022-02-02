@@ -9,8 +9,8 @@ public enum Role {
 //    STUDENT,
 //    TEACHER,
     USER(Set.of(Permission.DEVELOPERS_READ)),
-    STUDENT(Set.of(Permission.DEVELOPERS_READ)),
-    TEACHER(Set.of(Permission.DEVELOPERS_READ)),
+    STUDENT(Set.of(Permission.STUDENT_PERM)),
+    TEACHER(Set.of(Permission.TEACHER_PERM)),
     ADMIN(Set.of(Permission.DEVELOPERS_READ, Permission.DEVELOPERS_WRITE));
 
     private final Set<Permission> permissions;
