@@ -80,7 +80,7 @@ public class SolutionController {
                 throw new SolutionNotFoundException("Решения не найдены.");
         }
         model.addAttribute("solutions", solutions);
-        return "/list/solutions_list";
+        return "list/solutions_list";
     }
 
     @PreAuthorize("hasAuthority('student:perms')")
@@ -90,7 +90,7 @@ public class SolutionController {
             Principal principal) throws UserNotFoundException {
         Student student = studentService.findByEmail(principal.getName());
         model.addAttribute("tasks", studentService.findAllActualTasks(student.getId()));
-        return "/solution/new_solution";
+        return "solution/new_solution";
     }
 
     @PreAuthorize("hasAuthority('student:perms')")
@@ -113,7 +113,7 @@ public class SolutionController {
     public String showSolutionForm(@PathVariable Long id, Model model) {
         Solution solution = solutionRepo.findById(id).get();
         model.addAttribute("solution", solution);
-        return "/solution/show_solution";
+        return "solution/show_solution";
     }
 
     @PreAuthorize("hasAuthority('student:perms')")
@@ -124,7 +124,7 @@ public class SolutionController {
             return "redirect:/solutions?error";
         }
         model.addAttribute("solution", solution);
-        return "/solution/edit_solution";
+        return "solution/edit_solution";
     }
 
     @PreAuthorize("hasAuthority('student:perms')")
@@ -161,7 +161,7 @@ public class SolutionController {
             return "redirect:/solutions?error";
         }
         model.addAttribute("solution", solution);
-        return "/solution/estimate_solution";
+        return "solution/estimate_solution";
     }
 
     @PreAuthorize("hasAuthority('teacher:perms')")

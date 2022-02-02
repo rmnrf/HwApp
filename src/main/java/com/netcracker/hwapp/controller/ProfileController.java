@@ -21,13 +21,13 @@ public class ProfileController {
     @GetMapping("/profile")
     public String showUserProfile(Model model, Principal principal) throws UserNotFoundException {
         model.addAttribute("user", userService.findByEmail(principal.getName()));
-        return "/profile/show_profile";
+        return "profile/show_profile";
     }
 
     @GetMapping("/editProfile")
     public String showEditProfileForm(Model model, Principal principal) throws UserNotFoundException {
         model.addAttribute("user", userService.findByEmail(principal.getName()));
-        return "/profile/edit_profile";
+        return "profile/edit_profile";
     }
 
     @PostMapping("/editProfile")

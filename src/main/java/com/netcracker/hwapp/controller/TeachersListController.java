@@ -35,6 +35,6 @@ public class TeachersListController {
         }
         model.addAttribute("disciplines", disciplineService.findAll());
         model.addAttribute("teachers", teachers);
-        return "/list/teachers_list";
+        return "list/teachers_list";
     }
 }

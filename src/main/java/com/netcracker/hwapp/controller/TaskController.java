@@ -62,7 +62,7 @@ public class TaskController {
                 throw new TaskNotFoundException("Задания не найдены.");
         }
         model.addAttribute("tasks", tasks);
-        return "/list/tasks_list";
+        return "list/tasks_list";
     }
 
     @PreAuthorize("hasAuthority('teacher:perms')")
@@ -72,7 +72,7 @@ public class TaskController {
             Principal principal) {
         model.addAttribute("faculties", facultyService.findAll());
         model.addAttribute("teacher", teacherRepo.findByEmail(principal.getName()));
-        return "/task/new_task";
+        return "task/new_task";
     }
 
     @PreAuthorize("hasAuthority('teacher:perms')")
@@ -93,7 +93,7 @@ public class TaskController {
     public String showTaskForm(@PathVariable Long id, Model model) {
         Task task = taskRepo.findById(id).get();
         model.addAttribute("task", task);
-        return "/task/show_task";
+        return "task/show_task";
     }
 
     @PreAuthorize("hasAuthority('teacher:perms')")
@@ -104,7 +104,7 @@ public class TaskController {
             return "redirect:/tasks?error";
         }
         model.addAttribute("task", task);
-        return "/task/edit_task";
+        return "task/edit_task";
     }
 
     @PreAuthorize("hasAuthority('teacher:perms')")

@@ -31,6 +31,6 @@ public class GroupController {
         }
         model.addAttribute("group", group);
         model.addAttribute("students", students);
-        return "/list/group_list";
+        return "list/group_list";
     }
 }

@@ -39,7 +39,7 @@ public class StudentsListController {
         List<Student> students = studentRepo.findAll();
         model.addAttribute("students", students);
         model.addAttribute("faculties", facultyRepo.findAll());
-        return "/list/students_list";
+        return "list/students_list";
     }
 }
 
