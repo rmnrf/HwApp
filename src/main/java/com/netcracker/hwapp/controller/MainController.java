@@ -38,4 +38,9 @@ public class MainController {
     public String showRulesPage() {
         return "rules";
     }
+
+    @GetMapping("/login")
+    public String getLoginPage() {
+        return "login";
+    }
 }

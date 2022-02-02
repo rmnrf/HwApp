@@ -20,7 +20,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Solution {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -51,5 +50,4 @@ public class Solution {
     @ManyToOne
     @JoinColumn(name = "students_id")
     private Student student;
-
 }

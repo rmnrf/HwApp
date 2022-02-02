@@ -5,8 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import java.util.List;
 
 @Entity(name = "disciplines")
 @Table(name = "disciplines")
@@ -14,11 +12,9 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Discipline {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
-
 }

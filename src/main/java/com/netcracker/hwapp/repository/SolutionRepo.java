@@ -16,5 +16,4 @@ public interface SolutionRepo extends JpaRepository<Solution, Long> {
     List<Solution> findAllByStudentEmail(String email);
     List<Solution> findAllByTaskId(Long id);
     Optional<Solution> findByTaskIdAndStudentEmail(Long id, String email);
-    void deleteAllByTaskId(Long id);
 }

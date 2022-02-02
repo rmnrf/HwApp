@@ -9,7 +9,6 @@ import com.netcracker.hwapp.exception.UserAlreadyExistsException;
 import com.netcracker.hwapp.exception.UserNotFoundException;
 import com.netcracker.hwapp.model.Student;
 import com.netcracker.hwapp.model.Teacher;
-import com.netcracker.hwapp.model.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.security.Principal;

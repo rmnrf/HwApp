@@ -1,4 +1,4 @@
-package com.netcracker.hwapp.controller;
+package com.netcracker.hwapp.controller.rest;
 
 import com.netcracker.hwapp.exception.UserAlreadyExistsException;
 import com.netcracker.hwapp.exception.UserNotFoundException;

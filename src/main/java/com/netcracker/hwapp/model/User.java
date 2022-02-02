@@ -1,7 +1,6 @@
 package com.netcracker.hwapp.model;
 
 import com.netcracker.hwapp.enums.Role;
-import com.netcracker.hwapp.enums.Status;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -15,7 +14,6 @@ import javax.persistence.*;
 @Data
 @NoArgsConstructor
 public class User {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -35,5 +33,4 @@ public class User {
 
     @Enumerated(value = EnumType.STRING)
     private Role role;
-
 }

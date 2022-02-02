@@ -7,10 +7,9 @@ public enum Grade {
     FAIR("Удовлетворительно"),
     POOR("Неудовлетворительно");
 
-
     private final String displayValue;
 
-    private Grade(String displayValue) {
+    Grade(String displayValue) {
         this.displayValue = displayValue;
     }
 

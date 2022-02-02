@@ -1,9 +1,7 @@
 package com.netcracker.hwapp.controller;
 
 import com.netcracker.hwapp.dto.*;
-import com.netcracker.hwapp.enums.Grade;
 import com.netcracker.hwapp.exception.SolutionNotFoundException;
-import com.netcracker.hwapp.exception.TaskNotFoundException;
 import com.netcracker.hwapp.exception.UserNotFoundException;
 import com.netcracker.hwapp.model.*;
 import com.netcracker.hwapp.model.File;
@@ -91,7 +89,7 @@ public class SolutionController {
             Model model,
             Principal principal) throws UserNotFoundException {
         Student student = studentService.findByEmail(principal.getName());
-        model.addAttribute("tasks", taskRepo.findAllByGroups_Id(student.getGroup().getId()));
+        model.addAttribute("tasks", studentService.findAllActualTasks(student.getId()));
         return "/solution/new_solution";
     }
 

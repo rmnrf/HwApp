@@ -2,11 +2,8 @@ package com.netcracker.hwapp.controller;
 
 import com.netcracker.hwapp.dto.TaskCreateDto;
 import com.netcracker.hwapp.dto.TaskUpdateDto;
-import com.netcracker.hwapp.dto.TeacherRegistrationDto;
 import com.netcracker.hwapp.exception.TaskNotFoundException;
-import com.netcracker.hwapp.model.Discipline;
 import com.netcracker.hwapp.model.Task;
-import com.netcracker.hwapp.model.Teacher;
 import com.netcracker.hwapp.model.User;
 import com.netcracker.hwapp.repository.*;
 import com.netcracker.hwapp.service.FacultyService;
@@ -15,12 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -56,7 +51,9 @@ public class TaskController {
         List<Task> tasks = null;
         switch (user.getUserType()) {
             case "Студент":
-                tasks = taskRepo.findAllByGroups_Id(studentRepo.findById(user.getId()).get().getGroup().getId());
+                tasks = taskService.findAllNotOverdueTasksByGroupId(
+                        studentRepo.findById(user.getId()).get().getGroup().getId());
+//                tasks = taskRepo.findAllByGroups_Id(studentRepo.findById(user.getId()).get().getGroup().getId());
                 break;
             case "Преподаватель":
                 tasks = taskRepo.findAllByTeacherEmail(principal.getName());

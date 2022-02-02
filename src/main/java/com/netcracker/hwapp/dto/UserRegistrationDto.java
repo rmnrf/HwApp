@@ -10,7 +10,7 @@ import javax.validation.constraints.Size;
 
 @Data
 @NoArgsConstructor
-public class UserRegistrationDto implements DTOEntity {
+public class UserRegistrationDto {
 
     @Email(message = "Email должен быть корректным адресом электронной почты")
     @NotBlank(message = "Необходимо указать email")

@@ -11,9 +11,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @DiscriminatorValue("Студент")
 public class Student extends User {
-
     @ManyToOne
     @JoinColumn(name = "group_id")
     private Group group;
-
 }

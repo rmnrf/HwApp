@@ -1,7 +1,6 @@
 package com.netcracker.hwapp.repository;
 
 import com.netcracker.hwapp.model.Task;
-import com.netcracker.hwapp.model.Teacher;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -18,8 +18,8 @@
             <div class="form-floating">
                 <select th:field="*{task}" class="form-select col-md-6" aria-label="Default select example" id="disciplinesBlock"
                         aria-describedby="disciplinesHelpBlock" required>
-                    <option selected disabled value="">Выберите...</option>
-                    <option th:each="task : ${tasks}"
+                    <option selected value="">Выберите задание...</option>
+                    <option th:if="${!tasks.isEmpty()}" th:each="task : ${tasks}"
                             th:value="${task.getId()}"
                             th:text="Номер + ' ' + ${task.getId()} + '. Дисциплина: ' + ${task.discipline.name}"></option>
                 </select>

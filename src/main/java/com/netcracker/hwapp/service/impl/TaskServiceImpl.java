@@ -2,11 +2,9 @@ package com.netcracker.hwapp.service.impl;
 
 import com.netcracker.hwapp.dto.TaskCreateDto;
 import com.netcracker.hwapp.dto.TaskUpdateDto;
-import com.netcracker.hwapp.dto.UserUpdateDto;
 import com.netcracker.hwapp.exception.TaskAlreadyExistsException;
 import com.netcracker.hwapp.model.Discipline;
 import com.netcracker.hwapp.model.Task;
-import com.netcracker.hwapp.model.User;
 import com.netcracker.hwapp.repository.*;
 import com.netcracker.hwapp.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
-import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 @Service
@@ -83,5 +81,12 @@ public class TaskServiceImpl implements TaskService {
         } else {
             throw new RuntimeException("Вы не можете удалить это задание.");
         }
+    }
+
+    @Override
+    public List<Task> findAllNotOverdueTasksByGroupId(Long groupId) {
+        List<Task> groupTasks = taskRepo.findAllByGroups_Id(groupId);
+        groupTasks.removeIf(task -> LocalDateTime.now().isAfter(task.getDeadlineDateTime()));
+        return groupTasks;
     }
 }
