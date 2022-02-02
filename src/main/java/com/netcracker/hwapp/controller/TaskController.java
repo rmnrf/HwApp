@@ -12,6 +12,7 @@ import com.netcracker.hwapp.repository.*;
 import com.netcracker.hwapp.service.FacultyService;
 import com.netcracker.hwapp.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -67,6 +68,7 @@ public class TaskController {
         return "/list/tasks_list";
     }
 
+    @PreAuthorize("hasAuthority('teacher:perms')")
     @GetMapping("/new")
     public String showNewTaskForm(
             Model model,
@@ -76,6 +78,7 @@ public class TaskController {
         return "/task/new_task";
     }
 
+    @PreAuthorize("hasAuthority('teacher:perms')")
     @PostMapping("/new")
     public String createNewTask(
             @ModelAttribute("new_task")
@@ -96,6 +99,7 @@ public class TaskController {
         return "/task/show_task";
     }
 
+    @PreAuthorize("hasAuthority('teacher:perms')")
     @GetMapping("/edit/{id}")
     public String showEditTaskForm(@PathVariable Long id, Model model, Principal principal) {
         Task task = taskRepo.findById(id).get();
@@ -106,6 +110,7 @@ public class TaskController {
         return "/task/edit_task";
     }
 
+    @PreAuthorize("hasAuthority('teacher:perms')")
     @PostMapping("/edit")
     public String updateTask(
             @ModelAttribute("task")
@@ -119,6 +124,7 @@ public class TaskController {
         }
     }
 
+    @PreAuthorize("hasAuthority('teacher:perms')")
     @GetMapping("/delete/{id}")
     public String deleteTask(@PathVariable Long id, Principal principal) {
         try {

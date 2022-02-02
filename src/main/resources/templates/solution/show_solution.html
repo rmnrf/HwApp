@@ -87,6 +87,22 @@
             </div>
         </div>
 
+        <div class="col-md-3">
+            <div class="form-group">
+                <label class="form-label" for="inputDate3">Оценка:</label>
+                <input th:value="${solution.grade.displayValue}" type="text" id="inputDate4" class="form-control"
+                       readonly>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="form-group">
+                <label class="form-label" for="inputDate3">Статус:</label>
+                <input th:value="${solution.status.displayValue}" type="text" id="inputDate5" class="form-control"
+                       readonly>
+            </div>
+        </div>
+
         <!--        <div class="col-md-12">-->
         <!--            <label for="exampleInputEmail1" class="form-label">Преподаваемые дисциплины</label>-->
         <!--            <select multiple size="5" class="form-select col-md-6" aria-label="Default select example"-->
@@ -105,7 +121,7 @@
 
         <div class="col-md-12">
 <!--            <a th:href="@{/solutions/edit/{id}(id=${solution.id})}" class="shadow btn btn-primary">Поставить оценку</a>-->
-            <a th:href="@{/solutions}" class="shadow btn btn-primary">К списку решений</a>
+            <a th:href="@{/solutions}" class="shadow btn btn-outline-primary">К списку решений</a>
         </div>
     </form>
 

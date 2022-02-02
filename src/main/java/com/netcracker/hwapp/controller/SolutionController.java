@@ -14,6 +14,7 @@ import com.netcracker.hwapp.repository.UserRepo;
 import com.netcracker.hwapp.service.SolutionService;
 import com.netcracker.hwapp.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -60,7 +61,10 @@ public class SolutionController {
     }
 
     @GetMapping
-    public String showSolutionsPage(Model model, Principal principal) throws SolutionNotFoundException {
+    public String showSolutionsPage(@RequestParam(required = false) Long taskId,
+                                    Model model,
+                                    Principal principal)
+            throws SolutionNotFoundException {
         User user = userRepo.findByEmail(principal.getName());
         List<Solution> solutions = null;
         switch (user.getUserType()) {
@@ -68,7 +72,11 @@ public class SolutionController {
                 solutions = solutionRepo.findAllByStudentEmail(principal.getName());
                 break;
             case "Преподаватель":
-                solutions = solutionRepo.findAllByTaskTeacherId(user.getId());
+                if (taskId == null) {
+                    solutions = solutionRepo.findAllByTaskTeacherId(user.getId());
+                } else {
+                    solutions = solutionRepo.findAllByTaskId(taskId);
+                }
                 break;
             default:
                 throw new SolutionNotFoundException("Решения не найдены.");
@@ -77,6 +85,7 @@ public class SolutionController {
         return "/list/solutions_list";
     }
 
+    @PreAuthorize("hasAuthority('student:perms')")
     @GetMapping("/new")
     public String showNewSolutionForm(
             Model model,
@@ -86,6 +95,7 @@ public class SolutionController {
         return "/solution/new_solution";
     }
 
+    @PreAuthorize("hasAuthority('student:perms')")
     @PostMapping("/new")
     public String createNewSolution(
             @ModelAttribute("new_solution")
@@ -100,6 +110,7 @@ public class SolutionController {
         }
     }
 
+    @PreAuthorize("hasAuthority('student:perms')")
     @GetMapping("/{id}")
     public String showSolutionForm(@PathVariable Long id, Model model) {
         Solution solution = solutionRepo.findById(id).get();
@@ -107,6 +118,7 @@ public class SolutionController {
         return "/solution/show_solution";
     }
 
+    @PreAuthorize("hasAuthority('student:perms')")
     @GetMapping("/edit/{id}")
     public String showEditSolutionForm(@PathVariable Long id, Model model, Principal principal) {
         Solution solution = solutionRepo.findById(id).get();
@@ -117,21 +129,24 @@ public class SolutionController {
         return "/solution/edit_solution";
     }
 
+    @PreAuthorize("hasAuthority('student:perms')")
     @PostMapping("/edit")
     public String updateSolution(
             @ModelAttribute("solution")
             @Valid SolutionUpdateDto solutionUpdateDto,
+            @RequestParam("myFile") MultipartFile myFile,
             Principal principal) {
         try {
-            solutionService.update(solutionUpdateDto, principal);
+            solutionService.update(solutionUpdateDto, principal, myFile);
             return "redirect:/solutions?updated";
         } catch (Exception e) {
             return "redirect:/solutions?error";
         }
     }
 
+    @PreAuthorize("hasAuthority('student:perms')")
     @GetMapping("/delete/{id}")
-    public String deleteTask(@PathVariable Long id, Principal principal) {
+    public String deleteSolution(@PathVariable Long id, Principal principal) {
         try {
             solutionService.delete(id, principal);
             return "redirect:/solutions?deleted";
@@ -140,6 +155,7 @@ public class SolutionController {
         }
     }
 
+    @PreAuthorize("hasAuthority('teacher:perms')")
     @GetMapping("/estimate/{id}")
     public String showEstimateSolutionForm(@PathVariable Long id, Model model, Principal principal) {
         Solution solution = solutionRepo.findById(id).get();
@@ -150,6 +166,7 @@ public class SolutionController {
         return "/solution/estimate_solution";
     }
 
+    @PreAuthorize("hasAuthority('teacher:perms')")
     @PostMapping("/estimate")
     public String estimateTask(
             @ModelAttribute("estimate_solution")
@@ -179,6 +196,4 @@ public class SolutionController {
             outputStream.close();
         }
     }
-
-
 }

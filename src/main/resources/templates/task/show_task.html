@@ -89,8 +89,8 @@
         <!--        </div>-->
 
         <div class="col-md-12">
+            <a th:href="@{/tasks}" class="shadow btn btn-outline-primary">К списку заданий</a>
             <a sec:authorize="hasAuthority('student:perms')" th:href="@{/solutions/new}" class="shadow btn btn-primary">Отправить решение</a>
-            <a th:href="@{/tasks}" class="shadow btn btn-primary">К списку заданий</a>
         </div>
 
     </form>

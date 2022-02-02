@@ -4,6 +4,7 @@ import com.netcracker.hwapp.model.File;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Data

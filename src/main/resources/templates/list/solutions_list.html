@@ -36,6 +36,8 @@
     </div>
 
     <a sec:authorize="hasAuthority('student:perms')" th:href="@{/solutions/new}" class="btn btn-primary shadow mb-3">Отправить решение</a>
+    <br sec:authorize="hasAuthority('teacher:perms')">
+
     <table class="table table-striped table-hover table-bordered table-responsive align-middle">
         <thead>
         <tr>
@@ -50,14 +52,19 @@
         </tr>
         </thead>
         <tbody>
-
         <tr th:each="solution : ${solutions}">
-            <td><a th:href="@{/tasks/{id}(id=${solution.task.id})}" th:text="${solution.task.id}"></a></td>
+            <th scope="row"><a th:href="@{/tasks/{id}(id=${solution.task.id})}" th:text="${solution.task.id}"></a></th>
             <td th:text="${solution.student.lastName + ' ' + solution.student.firstName + ' ' + solution.student.middleName}"></td>
             <td th:text="${solution.student.group.faculty.name}"></td>
             <td th:text="${solution.student.group.number}"></td>
             <td th:text="${#temporals.format(solution.updateDateTime, 'yyyy-MM-dd HH:mm')}"></td>
-            <td><span th:text="${solution.grade.displayValue}" class="badge rounded-pill bg-warning text-dark"></span></td>
+            <td th:switch="${solution.grade}">
+                <span th:case="${T(com.netcracker.hwapp.enums.Grade).NONE}"      th:text="${solution.grade.displayValue}" class="badge rounded-pill bg-secondary"></span>
+                <span th:case="${T(com.netcracker.hwapp.enums.Grade).GOOD}"      th:text="${solution.grade.displayValue}" class="badge rounded-pill bg-info text-dark"></span>
+                <span th:case="${T(com.netcracker.hwapp.enums.Grade).FAIR}"      th:text="${solution.grade.displayValue}" class="badge rounded-pill bg-warning text-dark"></span>
+                <span th:case="${T(com.netcracker.hwapp.enums.Grade).POOR}"      th:text="${solution.grade.displayValue}" class="badge rounded-pill bg-danger"></span>
+                <span th:case="${T(com.netcracker.hwapp.enums.Grade).EXCELLENT}" th:text="${solution.grade.displayValue}" class="badge rounded-pill bg-success"></span>
+            </td>
             <td th:text="${solution.status.displayValue}"></td>
             <td>
                 <a sec:authorize="hasAuthority('teacher:perms')" th:href="@{/solutions/estimate/{id}(id=${solution.id})}" class="btn btn-primary btn-sm">Оценить</a>
@@ -66,55 +73,6 @@
                 <a sec:authorize="hasAuthority('student:perms')" th:if="${solution.grade.equals(T(com.netcracker.hwapp.enums.Grade).NONE)}" th:href="@{/solutions/delete/{id}(id=${solution.id})}" class="btn btn-danger btn-sm">Удалить</a>
             </td>
         </tr>
-
-
-
-
-
-<!--        <tr>-->
-<!--            <th scope="row">73</th>-->
-<!--            <td>Иванов Иван Иванович</td>-->
-<!--            <td>Биологический</td>-->
-<!--            <td>322</td>-->
-<!--            <td>28.01.2022</td>-->
-<!--            <td></td>-->
-<!--            <td>Отправлено</td>-->
-<!--            <td>-->
-<!--                <a class="btn btn-primary btn-sm">Открыть</a>-->
-<!--                &lt;!&ndash;                <a class="btn btn-primary">Изменить</a>&ndash;&gt;-->
-<!--                &lt;!&ndash;                <a class="btn btn-danger">Удалить</a>&ndash;&gt;-->
-<!--            </td>-->
-<!--        </tr>-->
-<!--        <tr>-->
-<!--            <th scope="row">13</th>-->
-<!--            <td>Богданов Сергей Викторович</td>-->
-<!--            <td>Физический</td>-->
-<!--            <td>222</td>-->
-<!--            <td>24.01.2022</td>-->
-<!--            <td>Отлично</td>-->
-<!--            <td>Оценено</td>-->
-<!--            <td>-->
-<!--                <a class="btn btn-primary btn-sm">Открыть</a>-->
-<!--                &lt;!&ndash;                <a class="btn btn-primary">Изменить</a>&ndash;&gt;-->
-<!--                &lt;!&ndash;                <a class="btn btn-danger">Удалить</a>&ndash;&gt;-->
-<!--            </td>-->
-<!--        </tr>-->
-<!--        <tr>-->
-<!--            <th scope="row">33</th>-->
-<!--            <td>Кириллов Кирилл Витальевич</td>-->
-<!--            <td>Математический</td>-->
-<!--            <td>141</td>-->
-<!--            <td>29.01.2022</td>-->
-<!--            <td>Зачет</td>-->
-<!--            <td>Оценено</td>-->
-<!--            <td>-->
-<!--                <a class="btn btn-primary btn-sm">Открыть</a>-->
-<!--                &lt;!&ndash;                <a class="btn btn-primary">Изменить</a>&ndash;&gt;-->
-<!--                &lt;!&ndash;                <a class="btn btn-danger">Удалить</a>&ndash;&gt;-->
-<!--            </td>-->
-<!--        </tr>-->
-
-
         </tbody>
     </table>
 

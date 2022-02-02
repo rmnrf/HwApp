@@ -11,7 +11,7 @@ import java.security.Principal;
 public interface SolutionService {
     void create(SolutionCreateDto dto, Principal principal, MultipartFile file)
             throws SolutionAlreadyExistsException, DeadlineDateTimeHasExriped, IOException;
-    void update(SolutionUpdateDto dto, Principal principal);
+    void update(SolutionUpdateDto dto, Principal principal, MultipartFile myFile) throws IOException;
     void delete(Long id, Principal principal);
     void estimate(SolutionEstimateDto dto, Principal principal);
 }

@@ -64,12 +64,18 @@ public class SolutionServiceImpl implements SolutionService {
     }
 
     @Override
-    public void update(SolutionUpdateDto dto, Principal principal) {
+    public void update(SolutionUpdateDto dto, Principal principal, MultipartFile myFile) throws IOException {
         Solution solution = solutionRepo.findById(dto.getId()).get();
-        solution.setFile(dto.getFile());
         solution.setComment(dto.getComment());
         if (solutionRepo.findAllByStudentEmail(principal.getName()).contains(solution)) {
             if (solution.getGrade().equals(Grade.NONE)) {
+                File file = new File();
+                file.setName(myFile.getOriginalFilename());
+                file.setType(myFile.getContentType());
+                file.setData(myFile.getBytes());
+                fileRepo.save(file);
+
+                solution.setFile(file);
                 solutionRepo.save(solution);
             } else {
                 throw new RuntimeException("Вы не можете удалить оцененное задание.");

@@ -7,6 +7,8 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Entity(name = "files")
 @Table(name = "files")
@@ -18,10 +20,14 @@ public class File {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank
     private String name;
 
+    @NotBlank
     private String type;
 
     @Lob
+    @Basic(fetch=FetchType.LAZY)
+    @NotNull
     private byte[] data;
 }

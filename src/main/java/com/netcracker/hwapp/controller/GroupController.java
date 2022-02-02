@@ -5,6 +5,7 @@ import com.netcracker.hwapp.model.Group;
 import com.netcracker.hwapp.model.Student;
 import com.netcracker.hwapp.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +21,7 @@ public class GroupController {
     @Autowired
     private StudentService studentService;
 
+    @PreAuthorize("hasAuthority('student:perms')")
     @GetMapping
     public String showGroupPage(Model model, Principal principal) throws UserNotFoundException {
         Group group = studentService.findByEmail(principal.getName()).getGroup();
