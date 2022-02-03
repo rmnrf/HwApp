@@ -132,7 +132,7 @@
             <button type="submit" class="shadow btn btn-primary">Зарегистрироваться</button>
         </form>
 
-    <form th:case="'teacher'" th:action="@{/registration/teacher}" method="post" th:object="${teacher}" class="row g-3" novalidate
+    <form th:case="'teacher'" th:action="@{/registration/teacher}" method="post" th:object="${teacher}" class="row g-3 needs-validation" novalidate
           oninput='up2.setCustomValidity(up2.value !== up.value ? "Пароли не совпадают." : "")'>
         <div class="col-md-12">
             <div class="form-floating mb-3">
